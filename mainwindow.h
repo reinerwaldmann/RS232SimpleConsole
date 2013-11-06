@@ -31,6 +31,7 @@ public:
 QextSerialPort *   port;
 PortSettings portSettings;
 
+QByteArray buffer;
 
 
     
