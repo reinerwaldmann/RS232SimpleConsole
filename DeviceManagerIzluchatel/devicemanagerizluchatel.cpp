@@ -14,8 +14,12 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
  {//makes measurements
 //for debugging purposes
 
-principal->shellList.at(slt-1)->acceptResult(slt,out,0,50.1);
+//principal->shellList.at(slt-1)->acceptResult(slt,out,0,50.1);
+     //devicesHash.value("s")->connectx();
 
+//for debugging purposes
+
+devicesHash.value(0)->measure(0);
 return 0;
 
  }
@@ -42,4 +46,8 @@ return 0;
     {}
 
     char DeviceManagerIzluchatel::addDevice (Device * idevice)
-    {}
+    {
+        char newid=devicesHash.keys().length();
+        devicesHash.insert(newid, idevice);
+        //длина списка ключей
+    }

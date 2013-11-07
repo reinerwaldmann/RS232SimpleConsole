@@ -6,7 +6,7 @@ DeviceLAN::DeviceLAN(DeviceManagerIzluchatel *iman):
 }
 
 
-void Device::connecx()
+void Device::connectx()
 {
 
 

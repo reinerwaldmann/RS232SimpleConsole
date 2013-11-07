@@ -15,13 +15,13 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class PrincipalWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit PrincipalWindow(QWidget *parent = 0);
+    ~PrincipalWindow();
     void displayActivePorts();
     void send ();
     void connectx();

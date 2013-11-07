@@ -1,8 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "principalwindow.h"
+#include "ui_PrincipalWindow.h"
 #include <QTimer>
+#include "DeviceManagerIzluchatel/devicemanagerizluchatel.h"
+#include "DeviceManagerIzluchatel/devicers232rubin201.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+PrincipalWindow::PrincipalWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -35,10 +37,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
      //debugging script
-     ui->comboChoosePort->setCurrentIndex(1);
+    /* ui->comboChoosePort->setCurrentIndex(1);
      ui->lineEnterValue->setText("0x82");
      on_pushConnect_clicked();
-
+*/
 /*
      QTimer   * debug_timer  = new QTimer (this) ;
 connect(debug_timer, SIGNAL(timeout()), this, SLOT(on_pushSend_clicked()));
@@ -48,11 +50,15 @@ debug_timer->start(1000);
 
      //on_pushSend_clicked();
 
+     DeviceManagerIzluchatel  *dvm = new DeviceManagerIzluchatel (this, this);
+     DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 (dvm);
+     dvm->addDevice(rdev);
+     dvm->measure(0,0);
 
 
 }
 
-MainWindow::~MainWindow()
+PrincipalWindow::~PrincipalWindow()
 {
     disconnectx();
     port->close();
@@ -61,7 +67,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::displayActivePorts()
+void PrincipalWindow::displayActivePorts()
 {
     QList<QextPortInfo> ports = QextSerialEnumerator::getPorts();
 
@@ -80,7 +86,7 @@ void MainWindow::displayActivePorts()
 
 }
 
-void MainWindow::send ()
+void PrincipalWindow::send ()
 {
     buffer.clear();
     QString txt = ui->lineEnterValue->text();
@@ -101,7 +107,7 @@ ms(QString (">")+txt);
 
 }
 
-void MainWindow::connectx()
+void PrincipalWindow::connectx()
 {
     port->setPortName(ui->comboChoosePort->currentText());
     if (port->open(QIODevice::ReadWrite | QIODevice::Unbuffered))
@@ -121,7 +127,7 @@ void MainWindow::connectx()
 }
 
 
-void MainWindow::disconnectx()
+void PrincipalWindow::disconnectx()
 {
 
     ms(tr ("Port %1 successfully disconnected").arg (port->portName() ), MSG_GOOD );
@@ -132,17 +138,17 @@ void MainWindow::disconnectx()
 
 }
 
-void MainWindow::on_pushConnect_clicked()
+void PrincipalWindow::on_pushConnect_clicked()
 {
 connectx();
 }
 
-void MainWindow::on_pushDisconnect_clicked()
+void PrincipalWindow::on_pushDisconnect_clicked()
 {
 disconnectx();
 }
 
-void MainWindow::onDataAvailable()
+void PrincipalWindow::onDataAvailable()
 {
 //we'll make a parsing mechanizm only for measurement for now.
 
@@ -226,14 +232,14 @@ void MainWindow::onDataAvailable()
 
 }
 
-void MainWindow::on_pushSend_clicked()
+void PrincipalWindow::on_pushSend_clicked()
 {
     send();
 }
 
 
 
-void MainWindow::ms(QString message, char type)
+void PrincipalWindow::ms(QString message, char type)
 {
     /*
 #define MSG_ERROR 1

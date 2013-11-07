@@ -68,6 +68,9 @@ public:
     void acceptMessage (QString msg, int id, int type);
 
 
+    void acceptMeausure (double value, int id, int type);
+
+
 
     /**
      * @brief addDevice

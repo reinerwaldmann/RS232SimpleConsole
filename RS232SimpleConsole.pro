@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 include(qextserialport-1.2beta2/src/qextserialport.pri)
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,20 +14,26 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     DeviceManagerIzluchatel/devicewidget.cpp \
     DeviceManagerIzluchatel/devicemanagerizluchatelui.cpp \
     DeviceManagerIzluchatel/devicemanagerizluchatel.cpp \
     DeviceManagerIzluchatel/devicelan.cpp \
-    DeviceManagerIzluchatel/device.cpp
+    DeviceManagerIzluchatel/device.cpp \
+    DeviceManagerIzluchatel/devicers232.cpp \
+    principalwindow.cpp \
+    DeviceManagerIzluchatel/devicers232rubin201.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     DeviceManagerIzluchatel/devicewidget.h \
     DeviceManagerIzluchatel/devicemanagerizluchatelui.h \
     DeviceManagerIzluchatel/devicemanagerizluchatel.h \
     DeviceManagerIzluchatel/devicelan.h \
-    DeviceManagerIzluchatel/device.h
+    DeviceManagerIzluchatel/device.h \
+    DeviceManagerIzluchatel/devicers232.h \
+    principalwindow.h \
+    DeviceManagerIzluchatel/devicers232rubin201.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     DeviceManagerIzluchatel/devicewidget.ui \
-    DeviceManagerIzluchatel/devicemanagerizluchatelui.ui
+    DeviceManagerIzluchatel/devicemanagerizluchatelui.ui \
+    principalwindow.ui
