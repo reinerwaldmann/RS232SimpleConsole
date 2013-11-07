@@ -14,8 +14,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    DeviceManagerIzluchatel/devicewidget.cpp \
+    DeviceManagerIzluchatel/devicemanagerizluchatelui.cpp \
+    DeviceManagerIzluchatel/devicemanagerizluchatel.cpp \
+    DeviceManagerIzluchatel/devicelan.cpp \
+    DeviceManagerIzluchatel/device.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    DeviceManagerIzluchatel/devicewidget.h \
+    DeviceManagerIzluchatel/devicemanagerizluchatelui.h \
+    DeviceManagerIzluchatel/devicemanagerizluchatel.h \
+    DeviceManagerIzluchatel/devicelan.h \
+    DeviceManagerIzluchatel/device.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    DeviceManagerIzluchatel/devicewidget.ui \
+    DeviceManagerIzluchatel/devicemanagerizluchatelui.ui
