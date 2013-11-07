@@ -10,7 +10,7 @@ DeviceRS232 (iman)
     portSettings.StopBits=STOP_1;
     portSettings.Timeout_Millisec=600;
     port = new QextSerialPort(portSettings);
-    connect(port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
+connect(port, SIGNAL(readyRead()), this, SLOT(onDataAvailable()));
 
 
 

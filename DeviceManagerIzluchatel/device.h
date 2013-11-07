@@ -7,6 +7,9 @@ class DeviceManagerIzluchatel;
 
 class Device: public QObject
 {
+
+    Q_OBJECT
+
 public:
     Device(DeviceManagerIzluchatel * iman);
 

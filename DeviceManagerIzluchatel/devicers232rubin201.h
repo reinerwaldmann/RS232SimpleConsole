@@ -4,6 +4,9 @@
 
 class DeviceRS232Rubin201 : public DeviceRS232
 {
+
+    Q_OBJECT
+
 public:
     DeviceRS232Rubin201(DeviceManagerIzluchatel *iman);
     ~DeviceRS232Rubin201();
@@ -22,7 +25,7 @@ public:
 
     void firePingAccepted();
 
-private slots:
+public slots:
     void onDataAvailable();
 
 
