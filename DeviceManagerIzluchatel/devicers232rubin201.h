@@ -8,24 +8,45 @@ class DeviceRS232Rubin201 : public DeviceRS232
     Q_OBJECT
 
 public:
+    //Error code 1
     DeviceRS232Rubin201(DeviceManagerIzluchatel *iman);
     ~DeviceRS232Rubin201();
 
+    //Error code 2
     void setPort (QString iport);
 
-    void connectx();
+    //Error code 3
+    int connectx();
 
-    void disconnecx();
+    //Error code 4
+    int disconnecx();
 
-    void measure(int type);
+    //Error code 5
+    int measure(int type);
 
-    void ping ();
+    //Error code 6
+    int ping ();
 
-    void fireConnected();
+    //Error code 7
+    int fireConnected();
 
-    void firePingAccepted();
+    //Error code 8
+    int firePingAccepted();
+
+    //Error code 9
+    int sendToPort(QString msg);  //0 if OK 1 if error
+
+    QByteArray buffer;
+
+
+       QString getPosition();
+
+
+
+
 
 public slots:
+    //Error code 10
     void onDataAvailable();
 
 

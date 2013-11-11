@@ -9,6 +9,7 @@
 
 class PrincipalWindow;
 class Device;
+class DeviceManagerIzluchatelUI;
 
 /**
  * @brief The DeviceManagerIzluchatel class
@@ -18,8 +19,8 @@ class DeviceManagerIzluchatel : public QObject
 {
     Q_OBJECT
 public:
+    //EC1
     explicit DeviceManagerIzluchatel(PrincipalWindow * iprincipal,  QObject *parent = 0);
-
 
     /**
      * @brief measure
@@ -28,33 +29,41 @@ public:
      * @param out
      * @return 0 if OK, 1 if device is known to be offline
      */
-    char measure (char slt, char out);
+    //EC2
+    int measure (char slt, char out);
 
     /**
      * @brief checkAllOK
      * checks all devices
-     * @return if all the devices are OK
+     * @return 0 if all the devices are connected, 1 if some of then no, 2 if number
+     * of devices is not as specified
+     *  @param number if set, then we also check, that a sertain number of devices is
+     *  connected.
      */
-
-    bool checkAllOK ();
+    //EC3
+    int checkAllOK (int number=0);
 
 
     /**
      * @brief connectALL
      *connects everything
      */
-    void connectALL ();
+    //EC4
+    int connectALL ();
 
 
     /**
      * @brief connectx connects the device
      * @param id of the device in the devices hash
      */
-    void connectx (char id);
+    //EC5
+    int connectx (char id);
 
-    void disconnectAll ();
+    //EC6
+    int disconnectAll ();
 
-    void disconnectx (char id);
+    //EC7
+    int disconnectx (char id);
 
 
     /**
@@ -65,11 +74,14 @@ public:
      * @param id id of the device in the list
      * @param type type of the message (0 - normal, 1 - error), or some other types
      */
-    void acceptMessage (QString msg, int id, int type);
+    //EC8
+    int acceptMessage (QString msg, int id, int type);
 
+    //EC9
+    int acceptMeausure (double value, int id, int type);
 
-    void acceptMeausure (double value, int id, int type);
-
+   //EC10
+    int acceptPing (int id );
 
 
     /**
@@ -78,7 +90,8 @@ public:
      * @param idevice devices
      * @return 0 all is OK 1 same id already present
      */
-    char addDevice (Device * idevice);
+    //EC11
+    int addDevice (Device * idevice);
 
 
 

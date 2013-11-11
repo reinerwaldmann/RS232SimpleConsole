@@ -19,7 +19,7 @@ void Device::setID(char iid)
 }
 
 
-void Device::ms (QString msg, int id, int type)
+void Device::ms (QString msg,  int type)
 {
     devman->acceptMessage(msg, id, type);
 

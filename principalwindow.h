@@ -10,6 +10,8 @@
 #define MSG_ERROR 1
 #define MSG_NEUTRAL 0
 #define MSG_GOOD 2
+#define MSG_DEBUG 3
+
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +34,9 @@ QextSerialPort *   port;
 PortSettings portSettings;
 
 QByteArray buffer;
+
+
+
 
 
     

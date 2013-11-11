@@ -52,8 +52,18 @@ debug_timer->start(1000);
 
      DeviceManagerIzluchatel  *dvm = new DeviceManagerIzluchatel (this, this);
      DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 (dvm);
+     Device * nodev = new DeviceRS232Rubin201  (dvm);
+
+     rdev->setPort("COM3");
+
+     dvm->addDevice(nodev);
      dvm->addDevice(rdev);
-     dvm->measure(0,0);
+
+
+     dvm->connectx(1);
+
+     dvm->measure(0,1);
+
 
 
 }
@@ -181,10 +191,7 @@ void PrincipalWindow::onDataAvailable()
             ms (QString::number(result).append(buffer.at(4)?" дБ":" дБм") );
             ms ("\n\n");
             buffer.clear();
-        }
-
-
-
+}
 
   //  buffer.append(port->readAll());
 /*    QString txt = "<";
@@ -211,7 +218,7 @@ void PrincipalWindow::onDataAvailable()
 
 */
 
-    //QString txt = "<";
+  //  QString txt = "<";
 
       // QByteArray qb = port->readAll();
 
@@ -226,9 +233,9 @@ void PrincipalWindow::onDataAvailable()
     }
 
 */
-    //txt.append(QString (port->readAll())  );
-   //ms(txt);
-
+   /* txt.append(QString (port->readAll())  );
+   ms(txt);
+*/
 
 }
 
