@@ -59,10 +59,11 @@ debug_timer->start(1000);
      dvm->addDevice(nodev);
      dvm->addDevice(rdev);
 
-
      dvm->connectx(1);
 
-     dvm->measure(0,1);
+
+
+ //    dvm->measure(0,1);
 
 
 
@@ -163,6 +164,25 @@ void PrincipalWindow::onDataAvailable()
 //we'll make a parsing mechanizm only for measurement for now.
 
     QByteArray qb = port->readAll();
+    QString txt="<";
+buffer.append(qb);
+    if (buffer.size()>2)
+    {
+
+        for (int i=0; i<buffer.size(); i++)
+        {
+            txt.append(QString(" 0x").append( QString::number(buffer.at(i),16 )).append("\n") );
+
+        }
+
+        buffer.clear();
+    }
+
+ui->textEditConsole->append(txt);
+
+return;
+
+
 
         for (int i=0; i<qb.size(); i++)
         {
@@ -182,6 +202,7 @@ void PrincipalWindow::onDataAvailable()
             int  t = high;
             t= t <<8;
             t+=low;
+
 
             double result = t;
             result/=100;

@@ -4,6 +4,8 @@
 #include <QObject>
 #include "./principalwindow.h"
 #include "device.h"
+
+
 #include "devicemanagerizluchatelui.h"
 
 

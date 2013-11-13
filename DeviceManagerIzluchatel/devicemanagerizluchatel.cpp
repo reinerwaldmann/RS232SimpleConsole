@@ -60,7 +60,6 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
 
         }
 
-        UI->displayDevices();
     }
 
     int  DeviceManagerIzluchatel::connectx (char id)
@@ -70,7 +69,7 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
             acceptMessage("ERR 2151 no such device", 0, MSG_ERROR);
         }
         devicesHash.value(id)->connectx();
-        UI->displayDevices();
+
     }
 
     int DeviceManagerIzluchatel::disconnectAll ()

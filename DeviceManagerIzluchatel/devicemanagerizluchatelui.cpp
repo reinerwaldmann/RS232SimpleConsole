@@ -40,7 +40,7 @@ void DeviceManagerIzluchatelUI::acceptMessage(QString msg, int id, int type)
 void DeviceManagerIzluchatelUI::acceptPing(int id)
 {
     ui->console->append(tr( "<font color=green> %1 %2 </font>" ).arg("ACCEPTED PING FROM").arg(QString::number(id)) );
-
+    displayDevices(); // updating the devices state
 }
 
 
@@ -74,7 +74,12 @@ void DeviceManagerIzluchatelUI::displayDevices()
        ui->tableWidget->setItem(k,2,item2);
        ui->tableWidget->setItem(k,3,item3);
 
-      ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(k,4), new QPushButton);
+       QPushButton * conButton = new QPushButton ("Подключить");
+
+       connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
+
+
+       ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(k,4), conButton);
 
 
     }

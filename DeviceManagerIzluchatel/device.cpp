@@ -12,6 +12,8 @@ Device::Device(DeviceManagerIzluchatel *iman)
 
 }
 
+
+
 void Device::setID(char iid)
 {
     id = iid;

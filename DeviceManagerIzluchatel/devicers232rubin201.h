@@ -1,6 +1,7 @@
 #ifndef DEVICERS232RUBIN201_H
 #define DEVICERS232RUBIN201_H
 #include "devicers232.h"
+#include <QTimer>
 
 class DeviceRS232Rubin201 : public DeviceRS232
 {
@@ -36,6 +37,14 @@ public:
     //Error code 9
     int sendToPort(QString msg);  //0 if OK 1 if error
 
+
+    //Error code 10
+    int sendToPortMeasureValue();  //0 if OK 1 if error
+    //sends 0x82 as a number, fixed
+
+
+
+
     QByteArray buffer;
 
 
@@ -48,7 +57,7 @@ public:
 public slots:
     //Error code 10
     void onDataAvailable();
-
+    void onPingFired();
 
 };
 
