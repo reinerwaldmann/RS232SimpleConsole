@@ -86,6 +86,10 @@ public:
     int acceptPing (int id );
 
 
+
+
+
+
     /**
      * @brief addDevice
      * we add the device to the list, assign it an id that it'll have in the hash
@@ -96,6 +100,8 @@ public:
     int addDevice (Device * idevice);
 
 
+    //EC12
+    void acceptPingFailed (int id);
 
 
 

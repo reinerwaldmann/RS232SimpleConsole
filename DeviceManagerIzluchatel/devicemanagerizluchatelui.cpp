@@ -22,16 +22,16 @@ void DeviceManagerIzluchatelUI::acceptMessage(QString msg, int id, int type)
         {
 
         case MSG_ERROR:
-            ui->console->append(tr( "<font color=red> %1 </font>" ).arg(msg) );
+            ui->console->append(tr( "<font color=red> ID=%1  %2 </font>" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_GOOD:
-            ui->console->append(tr( "<font color=green> %1 </font>" ).arg(msg) );
+            ui->console->append(tr( "<font color=green> ID=%1 %2 </font>" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_NEUTRAL:
-            ui->console->append(tr( " %1" ).arg(msg) );
+            ui->console->append(tr( "ID=%1 %2" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_DEBUG: //yet debug flag not implemented
-            ui->console->append(tr( " %1" ).arg(msg) );
+            ui->console->append(tr( "ID=%1 %2" ).arg(QString::number(id)).arg(msg) );
             break;
         }
 }
@@ -53,12 +53,18 @@ void DeviceManagerIzluchatelUI::displayDevices()
     ui->tableWidget->setRowCount(keylist.size());
     ui->tableWidget->setColumnCount(5);
 
+
+    QStringList l;
+    l<<"Идентификатор"<<"Имя устройства"<<"Состояние"<<"Порт"<<"Проверить связь/Измерить";
+    ui->tableWidget->setHorizontalHeaderLabels(l);
+
+
     char k;
     foreach (k, keylist)
     {
        QTableWidgetItem * item = new QTableWidgetItem (QString::number (k));
        QTableWidgetItem * item1 = new QTableWidgetItem (devman->devicesHash.value(k)->name );
-       QTableWidgetItem * item2 = new QTableWidgetItem (devman->devicesHash.value(k)->isConnected?"Connected":"Disconnected");
+       QTableWidgetItem * item2 = new QTableWidgetItem (devman->devicesHash.value(k)->isConnected?"Подключено":"Отключено");
        QTableWidgetItem * item3 = new QTableWidgetItem (devman->devicesHash.value(k)->getPosition());
 
 
@@ -74,7 +80,7 @@ void DeviceManagerIzluchatelUI::displayDevices()
        ui->tableWidget->setItem(k,2,item2);
        ui->tableWidget->setItem(k,3,item3);
 
-       QPushButton * conButton = new QPushButton ("Подключить");
+       QPushButton * conButton = new QPushButton ("Проверить связь");
 
        connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
 
@@ -83,6 +89,9 @@ void DeviceManagerIzluchatelUI::displayDevices()
 
 
     }
+
+
+    ui->tableWidget->resizeColumnsToContents();
 
 
 }

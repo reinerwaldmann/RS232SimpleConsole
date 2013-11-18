@@ -129,3 +129,10 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
         //длина списка ключей
         UI->displayDevices();
     }
+
+
+    void DeviceManagerIzluchatel::acceptPingFailed(int id)
+    {
+        UI->displayDevices();
+        UI->acceptMessage("Ошибка подключения - устройство недоступно", id,  MSG_ERROR);
+    }

@@ -59,6 +59,8 @@ public slots:
     void onDataAvailable();
     void onPingFired();
 
+
+
 };
 
 #endif // DEVICERS232RUBIN201_H

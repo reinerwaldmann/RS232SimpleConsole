@@ -1,7 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 #include "devicemanagerizluchatel.h"
-
+#include <QTimer>
 
 class DeviceManagerIzluchatel;
 
@@ -35,16 +35,24 @@ virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
  *MSG_NEUTRAL
  */
 void ms (QString msg,  int type=MSG_DEBUG);
-
 void setID (char iid);
+
+void setConnectedState (bool iisConnected);
+
 
 bool isConnected;
 char id;
 QString name;
 QString descr;
-
-
 DeviceManagerIzluchatel * devman;
+
+QTimer * reqtimer; //таймер, который используется для того, чтоб вывести сообщение "устройство недоступно"
+
+
+public slots:
+void onPingFailed ();
+
+
 
 
 

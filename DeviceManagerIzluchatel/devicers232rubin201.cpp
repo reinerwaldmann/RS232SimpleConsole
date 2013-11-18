@@ -53,21 +53,21 @@ int DeviceRS232Rubin201::connectx()
     }
 
 
-return 0;
+//return 0;
 
-    //return ping();
+    return ping();
 
 }
 
 int DeviceRS232Rubin201::fireConnected()
 {
-isConnected=1;
+setConnectedState(1);
 }
 
 int DeviceRS232Rubin201::disconnecx()
 {
 port->close();
-isConnected=0;
+setConnectedState(0);
 }
 
 int DeviceRS232Rubin201::ping()
@@ -83,14 +83,14 @@ int DeviceRS232Rubin201::ping()
 int DeviceRS232Rubin201::firePingAccepted()
 {
     fireConnected();
-
     devman->acceptPing(id);
 }
 
 
 void DeviceRS232Rubin201::onDataAvailable()
 {
-//вся хрень шоб работало
+    reqtimer->stop();
+
         QByteArray qb = port->readAll();
 
 
@@ -210,12 +210,8 @@ int DeviceRS232Rubin201::sendToPort(QString msg)
         port->write(f);
         ms(QString (">")+msg, MSG_DEBUG);
 
+        reqtimer->start(4000);
 }
-
-/*
-
-*/
-
 
 
 int DeviceRS232Rubin201::sendToPortMeasureValue()
@@ -239,5 +235,6 @@ QString DeviceRS232Rubin201::getPosition()
 void  DeviceRS232Rubin201::onPingFired ()
 {
     sendToPort("0x82");
-
 }
+
+
