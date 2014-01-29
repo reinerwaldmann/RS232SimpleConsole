@@ -1,6 +1,7 @@
 #include "devicelanjerome.h"
 
-DeviceLANJerome::DeviceLANJerome()
+DeviceLANJerome::DeviceLANJerome(DeviceManagerIzluchatel *iman):
+    DeviceLAN (iman)
 {
 }
--
+

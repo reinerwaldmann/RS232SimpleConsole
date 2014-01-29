@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     DeviceManagerIzluchatel/devicers232.cpp \
     principalwindow.cpp \
     DeviceManagerIzluchatel/devicers232rubin201.cpp \
-    DeviceManagerIzluchatel/devicelanjerome.cpp
+    DeviceManagerIzluchatel/devicelanjerome.cpp \
+    DeviceManagerIzluchatel/devicefinder.cpp
 
 HEADERS  += \
     DeviceManagerIzluchatel/devicewidget.h \
@@ -33,9 +34,11 @@ HEADERS  += \
     DeviceManagerIzluchatel/devicers232.h \
     principalwindow.h \
     DeviceManagerIzluchatel/devicers232rubin201.h \
-    DeviceManagerIzluchatel/devicelanjerome.h
+    DeviceManagerIzluchatel/devicelanjerome.h \
+    DeviceManagerIzluchatel/devicefinder.h
 
 FORMS    += \
     DeviceManagerIzluchatel/devicewidget.ui \
     DeviceManagerIzluchatel/devicemanagerizluchatelui.ui \
-    principalwindow.ui
+    principalwindow.ui \
+    DeviceManagerIzluchatel/devicefinder.ui

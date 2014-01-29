@@ -8,10 +8,13 @@
 
 #include "devicemanagerizluchatelui.h"
 
+#include "devicefinder.h"
+
 
 class PrincipalWindow;
 class Device;
 class DeviceManagerIzluchatelUI;
+class DeviceFinder;
 
 /**
  * @brief The DeviceManagerIzluchatel class
@@ -26,7 +29,7 @@ public:
 
     /**
      * @brief measure
-     * launches measurement process ASYNC, data is returned by other function
+     * launches measurement process ASYNC, data is returned by ot her function
      * @param slt
      * @param out
      * @return 0 if OK, 1 if device is known to be offline
@@ -107,12 +110,13 @@ public:
 
     /**
      * @brief devicesHash hashlist of the devices
+     * char is the id of the device, unique in this manager
      */
     QHash <char, Device * > devicesHash;
 
     PrincipalWindow * principal;
     DeviceManagerIzluchatelUI * UI;
-
+    DeviceFinder * devfind;
 
 
 

@@ -7,6 +7,13 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
     UI = new DeviceManagerIzluchatelUI (this);
 
     UI->show();
+
+
+    devfind = new DeviceFinder (this, UI);
+
+
+    devfind->show();
+
 }
 
 
