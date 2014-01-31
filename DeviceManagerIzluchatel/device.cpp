@@ -1,49 +1,107 @@
 #include "device.h"
 
-Device::Device(DeviceManagerIzluchatel *iman)
+Device::Device()
 {
-
-    devman = iman;
     isConnected=0;
-    id=INT_MAX; //если в ходе выполнения выплывает это значение,
+    id=0; //если в ходе выполнения выплывает это значение,
     //это значит, что айди не присвоен почему-то
-
     reqtimer = new QTimer (this);
     connect (reqtimer, SIGNAL ( timeout()  ), this, SLOT (onPingFailed()) );
+    reqtimer->setSingleShot(1);
+    type=0; //не определен
 
-       reqtimer->setSingleShot(1);
 }
 
+
+Device::~Device()
+{
+    disconnecx();
+}
 
 
 void Device::setID(char iid)
 {
     id = iid;
-
 }
 
-
-void Device::setConnectedState (bool iisConnected)
+int Device::getID()
 {
-isConnected=iisConnected;
-devman->UI->displayDevices();
-
+    return id;
 }
 
 
-void Device::ms (QString msg,  int type)
+bool Device::getIsConnected()
 {
-    devman->acceptMessage(msg, id, type);
+    return isConnected;
+}
+
+QString Device::getName()
+{
+    return name;
+}
+
+QString Device::getDescription()
+{
+    return descr;
+}
+
+
+QString Device::getVariableComment()
+{
+    return variableComment;
 
 }
 
 
+void Device::setVariableComment(QString iVariableComment)
+{
+    variableComment=iVariableComment;
+}
 
 void Device::onPingFailed()
 {
+    emit firePingFailed(id);
+    isConnected=0;
+}
 
-    devman->acceptPingFailed(id);
-    //devman->acceptMessage(tr("Ошибка: Не отвечает на запросы"),id,  MSG_ERROR);
-    setConnectedState(0);
+int Device::getType()
+{
+    return type;
 
 }
+
+
+int Device::getTimeout()
+{
+    return timeout;
+}
+
+
+void Device::ms(QString imsg, int type)
+{
+    emit msg(id,imsg,type);
+
+}
+
+Device * Device::returnMe()
+{
+    return this;
+}
+
+void Device::setConnectedState (bool isState)
+{
+isConnected=isState;
+
+if (isConnected)
+{ emit fireConnected(id);}
+
+else
+{    emit fireDisconnected(id); }
+
+
+
+
+
+
+}
+

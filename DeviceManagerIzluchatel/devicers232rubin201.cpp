@@ -1,7 +1,6 @@
 #include "devicers232rubin201.h"
 
-DeviceRS232Rubin201::DeviceRS232Rubin201(DeviceManagerIzluchatel *iman):
-DeviceRS232 (iman)
+DeviceRS232Rubin201::DeviceRS232Rubin201()
 {
     portSettings.BaudRate=BAUD9600;
     portSettings.FlowControl=FLOW_OFF;
@@ -14,77 +13,10 @@ DeviceRS232 (iman)
 
     name = "Рубин 201";
     descr = "Измеритель оптической мощности";
-
-
 }
 
 DeviceRS232Rubin201::~DeviceRS232Rubin201 ()
-{
-    disconnecx();
-}
-
-void DeviceRS232Rubin201::setPort(QString iport)
-{
-portname = iport;
-}
-
-int DeviceRS232Rubin201::connectx()
-{
-
-    if (!portname.length())
-    {
-    ms(tr ("ERR 2631 no portname specified"), MSG_ERROR);
-    return 2631;
-    }
-
-
-
-    port->setPortName(portname);
-
-
-        if (port->open(QIODevice::ReadWrite | QIODevice::Unbuffered))
-    {
-    ms(tr ("Port %1 successfully opened").arg (portname), MSG_DEBUG);
-    }
-    else
-    {
-    ms(tr ("ERR 2632 Port %1 error while opening").arg (portname), MSG_ERROR);
-    return 2632;
-    }
-
-
-//return 0;
-
-    return ping();
-
-}
-
-int DeviceRS232Rubin201::fireConnected()
-{
-setConnectedState(1);
-}
-
-int DeviceRS232Rubin201::disconnecx()
-{
-port->close();
-setConnectedState(0);
-}
-
-int DeviceRS232Rubin201::ping()
-{
-     //measurement is a ping, actually
-
-
-     QTimer::singleShot(3000, this, SLOT(onPingFired()));
-
-
-}
-
-int DeviceRS232Rubin201::firePingAccepted()
-{
-    fireConnected();
-    devman->acceptPing(id);
-}
+{}
 
 
 void DeviceRS232Rubin201::onDataAvailable()
@@ -225,16 +157,15 @@ int DeviceRS232Rubin201::sendToPortMeasureValue()
     ms(QString (">")+QString::number(0x82), MSG_DEBUG);
 }
 
-QString DeviceRS232Rubin201::getPosition()
-{
-    return portname;
-
-}
-
 
 void  DeviceRS232Rubin201::onPingFired ()
 {
     sendToPort("0x82");
 }
 
+void DeviceRS232Rubin201::ping()     //measurement is a ping, actually
+{
+      QTimer::singleShot(3000, this, SLOT(onPingFired()));
 
+
+}

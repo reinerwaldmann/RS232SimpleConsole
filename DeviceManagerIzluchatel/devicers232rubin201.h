@@ -10,14 +10,10 @@ class DeviceRS232Rubin201 : public DeviceRS232
 
 public:
     //Error code 1
-    DeviceRS232Rubin201(DeviceManagerIzluchatel *iman);
+    DeviceRS232Rubin201();
     ~DeviceRS232Rubin201();
 
-    //Error code 2
-    void setPort (QString iport);
 
-    //Error code 3
-    int connectx();
 
     //Error code 4
     int disconnecx();

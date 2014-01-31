@@ -7,13 +7,26 @@
 class DeviceRS232 : public Device
 {
 public:
+                    DeviceRS232();
 
+virtual             ~DeviceRS232();
+
+            QString getPosition();
+
+virtual     int    connectx();
+
+            void    setPortname (QString iportname);
+
+
+
+
+virtual     int    disconnecx();
+
+
+private:
     QextSerialPort * port;
     PortSettings portSettings;
-        QString portname;
 
-
-    DeviceRS232(DeviceManagerIzluchatel * iman);
 
 
 
