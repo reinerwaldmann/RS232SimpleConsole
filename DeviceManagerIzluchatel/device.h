@@ -12,6 +12,7 @@ class Device: public QObject
 
 public:
     Device(DeviceManagerIzluchatel * iman);
+    virtual ~Device();
 
 
 
@@ -53,6 +54,7 @@ public slots:
 void onPingFailed ();
 
 
+signals:
 
 
 
