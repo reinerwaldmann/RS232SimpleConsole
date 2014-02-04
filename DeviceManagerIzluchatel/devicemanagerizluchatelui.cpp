@@ -63,8 +63,8 @@ void DeviceManagerIzluchatelUI::displayDevices()
     foreach (k, keylist)
     {
        QTableWidgetItem * item = new QTableWidgetItem (QString::number (k));
-       QTableWidgetItem * item1 = new QTableWidgetItem (devman->devicesHash.value(k)->name );
-       QTableWidgetItem * item2 = new QTableWidgetItem (devman->devicesHash.value(k)->isConnected?"Подключено":"Отключено");
+       QTableWidgetItem * item1 = new QTableWidgetItem (devman->devicesHash.value(k)->getName());
+       QTableWidgetItem * item2 = new QTableWidgetItem (devman->devicesHash.value(k)->getIsConnected()?"Подключено":"Отключено");
        QTableWidgetItem * item3 = new QTableWidgetItem (devman->devicesHash.value(k)->getPosition());
 
 

@@ -8,13 +8,11 @@
 
 #include "devicemanagerizluchatelui.h"
 
-#include "devicefinder.h"
 
 
 class PrincipalWindow;
 class Device;
 class DeviceManagerIzluchatelUI;
-class DeviceFinder;
 
 /**
  * @brief The DeviceManagerIzluchatel class
@@ -26,16 +24,16 @@ class DeviceManagerIzluchatel : public QObject
 public:
     //EC1
     explicit DeviceManagerIzluchatel(PrincipalWindow * iprincipal,  QObject *parent = 0);
+    ~DeviceManagerIzluchatel ();
 
     /**
      * @brief measure
      * launches measurement process ASYNC, data is returned by ot her function
-     * @param slt
-     * @param out
+     * @param id is the id of the device in deviceshash
      * @return 0 if OK, 1 if device is known to be offline
      */
     //EC2
-    int measure (char slt, char out);
+    int measure (int id, QString type);
 
     /**
      * @brief checkAllOK
@@ -45,9 +43,14 @@ public:
      *  @param number if set, then we also check, that a sertain number of devices is
      *  connected.
      */
-    //EC3
-    int checkAllOK (int number=0);
 
+    //EC3
+    /**
+     * @brief checkAllOK
+     * @return 0 if all devices in the hash are connected
+     *1 if some of them are not connected
+     */
+    int checkAllOK ();
 
     /**
      * @brief connectALL
@@ -57,18 +60,8 @@ public:
     int connectALL ();
 
 
-    /**
-     * @brief connectx connects the device
-     * @param id of the device in the devices hash
-     */
-    //EC5
-    int connectx (char id);
-
     //EC6
     int disconnectAll ();
-
-    //EC7
-    int disconnectx (char id);
 
 
     /**
@@ -80,17 +73,6 @@ public:
      * @param type type of the message (0 - normal, 1 - error), or some other types
      */
     //EC8
-    int acceptMessage (QString msg, int id, int type);
-
-    //EC9
-    int acceptMeausure (double value, int id, int type);
-
-   //EC10
-    int acceptPing (int id );
-
-
-
-
 
 
     /**
@@ -100,30 +82,46 @@ public:
      * @return 0 all is OK 1 same id already present
      */
     //EC11
-    int addDevice (Device * idevice);
+    int addDevice (Device * idevice, int desiredid=0);
 
-
-    //EC12
-    void acceptPingFailed (int id);
-
-
-
-    /**
+    /*inits the deviceshashs*/
+    int initList ();
+     /**
      * @brief devicesHash hashlist of the devices
      * char is the id of the device, unique in this manager
      */
-    QHash <char, Device * > devicesHash;
+
+  void   setStandID(QString id);
+
+    QString getStandID();
+
+
+    QHash <int, Device * > devicesHash;
+
+
+    /**
+     * @brief currentstandid идентификатор текущего стенда, который будет сличаться
+     *с данными в файле предпочтений пользователя по устройствам.
+     */
+    QString currentstandid;
 
     PrincipalWindow * principal;
     DeviceManagerIzluchatelUI * UI;
-    DeviceFinder * devfind;
 
 
 
 signals:
+
+    void fireTransitMeasData(int id, int type, double value);
+    void fireDeviceDisconnected(int id);
     
 public slots:
-    
+    void slotAcceptMessage (int id, QString msg, int type);
+    void slotAcceptMeausure (int id, int type, double value);
+    void slotAcceptDeviceConnected (int id );
+    void slotAcceptDeviceDisconnected (int id);
+
+
 };
 
 #endif // DEVICEMANAGERIZLUCHATEL_H

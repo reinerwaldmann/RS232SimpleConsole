@@ -21,8 +21,7 @@ DeviceRS232Rubin201::~DeviceRS232Rubin201 ()
 
 void DeviceRS232Rubin201::onDataAvailable()
 {
-    reqtimer->stop();
-
+        reqtimer->stop();
         QByteArray qb = port->readAll();
 
 
