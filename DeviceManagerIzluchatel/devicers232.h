@@ -23,7 +23,7 @@ virtual     int    connectx();
 virtual     int    disconnecx();
 
 
-private:
+protected:
     QextSerialPort * port;
     PortSettings portSettings;
 

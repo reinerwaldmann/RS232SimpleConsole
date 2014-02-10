@@ -8,7 +8,7 @@
 class DeviceLAN : public Device
 {
 public:
-    DeviceLAN(DeviceManagerIzluchatel *iman);
+    DeviceLAN();
 };
 
 #endif // DEVICELAN_H

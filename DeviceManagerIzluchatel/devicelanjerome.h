@@ -5,7 +5,7 @@
 class DeviceLANJerome : public DeviceLAN
 {
 public:
-    DeviceLANJerome(DeviceManagerIzluchatel * iman);
+    DeviceLANJerome();
 };
 
 #endif // DEVICELANJEROME_H

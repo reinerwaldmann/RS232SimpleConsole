@@ -53,7 +53,12 @@ void DeviceRS232Rubin201::onDataAvailable()
 
         if ( (buffer.size()>2)&& (buffer.at(0)==0xffffffffffffff82)  ) //можно пробовать нечто интерпретировать
         {
-            firePingAccepted();
+            //emit fireConnected(id);
+
+            setConnectedState(1);
+
+
+            //firePingAccepted();
             //int t = buffer.at(1)<<8 + buffer.at(2);
             unsigned char high =  (unsigned char ) buffer.at(1);
             unsigned char low=  (unsigned char ) buffer.at(2);
@@ -70,7 +75,11 @@ void DeviceRS232Rubin201::onDataAvailable()
             ms ("\n\n");
 */
 
-            devman->acceptMeausure(result, id, buffer.at(4));
+            //devman->acceptMeausure(result, id, buffer.at(4));
+
+            fireMeasurementData(id,result, QString::number(buffer.at(4)));
+
+
             //1 - dB    0 - dBm - that's about last parameter
 
 
@@ -86,7 +95,7 @@ void DeviceRS232Rubin201::onDataAvailable()
 
 }
 
-int  DeviceRS232Rubin201::measure(int type)
+int  DeviceRS232Rubin201::measure(QString type)
 {
 //запущает  процесс измерений
 
@@ -162,7 +171,7 @@ void  DeviceRS232Rubin201::onPingFired ()
     sendToPort("0x82");
 }
 
-void DeviceRS232Rubin201::ping()     //measurement is a ping, actually
+int DeviceRS232Rubin201::ping()     //measurement is a ping, actually
 {
       QTimer::singleShot(3000, this, SLOT(onPingFired()));
 

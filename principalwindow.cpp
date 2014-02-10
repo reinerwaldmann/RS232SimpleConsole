@@ -50,20 +50,15 @@ debug_timer->start(1000);
 
      //on_pushSend_clicked();
 
+
      DeviceManagerIzluchatel  *dvm = new DeviceManagerIzluchatel (this, this);
-     DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 (dvm);
-     Device * nodev = new DeviceRS232Rubin201  (dvm);
-
-     rdev->setPort("COM3");
-
-     dvm->addDevice(nodev);
+     DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 ();
+     rdev->setPortname("COM3");
      dvm->addDevice(rdev);
 
-     dvm->connectx(1);
 
 
-
- //    dvm->measure(0,1);
+     dvm->connectALL();
 
 
 

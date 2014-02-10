@@ -15,20 +15,17 @@ public:
 
 
 
-    //Error code 4
-    int disconnecx();
-
     //Error code 5
-    int measure(int type);
+    int measure(QString type="");
 
     //Error code 6
     int ping ();
 
     //Error code 7
-    int fireConnected();
+    //int fireConnected();
 
     //Error code 8
-    int firePingAccepted();
+   // int firePingAccepted();
 
     //Error code 9
     int sendToPort(QString msg);  //0 if OK 1 if error
@@ -42,9 +39,6 @@ public:
 
 
     QByteArray buffer;
-
-
-       QString getPosition();
 
 
 

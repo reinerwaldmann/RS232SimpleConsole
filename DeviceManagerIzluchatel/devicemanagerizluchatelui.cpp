@@ -46,7 +46,7 @@ void DeviceManagerIzluchatelUI::acceptPing(int id)
 
 void DeviceManagerIzluchatelUI::displayDevices()
 {
-    QList <char> keylist = devman->devicesHash.keys();
+    QList <int> keylist = devman->devicesHash.keys();
 
     ui->tableWidget->clear();
 
@@ -82,7 +82,7 @@ void DeviceManagerIzluchatelUI::displayDevices()
 
        QPushButton * conButton = new QPushButton ("Проверить связь");
 
-       connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
+//        connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
 
 
        ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(k,4), conButton);

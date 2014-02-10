@@ -12,11 +12,12 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
 DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 {
 
-        QList <char> keylist = devicesHash.keys();
+        QList <int> keylist = devicesHash.keys();
         char key;
         foreach (key, keylist)
         {
-          delete devicesHash.value(key);
+            devicesHash.value(key)->disconnecx();
+            delete devicesHash.value(key);
         }
 
     devicesHash.clear();
@@ -45,11 +46,11 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
  int DeviceManagerIzluchatel::checkAllOK ()
     {
-        QList <char> keylist = devicesHash.keys();
+        QList <int> keylist = devicesHash.keys();
         char key;
         foreach (key, keylist)
         {
-            if (!devicesHash.value(key)->isConnected) return 1;
+            if (!devicesHash.value(key)->getIsConnected()) return 1;
         }
         return 0;
 
@@ -57,7 +58,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
     int DeviceManagerIzluchatel::connectALL ()
     {
-        QList <char> keylist = devicesHash.keys();
+        QList <int> keylist = devicesHash.keys();
         char key;
         foreach (key, keylist)
         {
@@ -65,11 +66,13 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         }
 
+
+        return 0 ;
     }
 
     int DeviceManagerIzluchatel::disconnectAll ()
     {
-        QList <char> keylist = devicesHash.keys();
+        QList <int> keylist = devicesHash.keys();
         char key;
         foreach (key, keylist)
         {
@@ -95,8 +98,17 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         idevice->setID(newid);
         devicesHash.insert(newid, idevice);
-
         UI->displayDevices(); //прямой вызов к интерфейсу, может быть заменён на связь сигнал-слот
+connect (idevice, SIGNAL (fireConnected (int)), this, SLOT (slotAcceptDeviceConnected(int))  );
+connect (idevice, SIGNAL (fireDisconnected (int)), this, SLOT (slotAcceptDeviceDisconnected(int))  );
+connect (idevice, SIGNAL (fireMeasurementData (int, double, QString)), this, SLOT (slotAcceptMeausure(int,double, QString))  );
+connect (idevice, SIGNAL (fireMsg (int, QString, int)), this, SLOT (slotAcceptMessage(int, QString, int))   );
+
+
+
+
+    return 0 ;
+
     }
 
     int DeviceManagerIzluchatel::initList()
@@ -104,6 +116,8 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         //в будущем будет инитить хеш устройств из xml файла
         //пока, для дебага, будем здесь добавлять разные устройства
+
+        return 0;
 
 
     }
@@ -130,11 +144,11 @@ void DeviceManagerIzluchatel::slotAcceptMessage(int id, QString msg, int type)
         UI->acceptMessage(msg, id, type);
     }
 
-void DeviceManagerIzluchatel::slotAcceptMeausure(int id, int type, double value)
+void DeviceManagerIzluchatel::slotAcceptMeausure(int id, double value, QString type)
     {
 
-UI->acceptMessage(tr ("Accepted measurement data: id = %1, value=%2 %3, type=%4").arg(QString::number(id)).arg(QString::number(value)).arg(type?"дБ":"дБм").arg(type) ,id,MSG_NEUTRAL );
-emit fireTransitMeasData(id, type, value);
+UI->acceptMessage(tr ("Accepted measurement data: id = %1, value=%2 %3, type=%4").arg(QString::number(id)).arg(QString::number(value)).arg(type.toInt()?"дБ":"дБм").arg(type) ,id,MSG_NEUTRAL );
+emit fireTransitMeasData(id,  value, type);
 //передаём далее сигналом как пришло
 //реализуется цепочка событий через сигнал-слот
     }

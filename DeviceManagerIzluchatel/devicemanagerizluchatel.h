@@ -112,12 +112,12 @@ public:
 
 signals:
 
-    void fireTransitMeasData(int id, int type, double value);
+    void fireTransitMeasData(int id,  double value, QString type);
     void fireDeviceDisconnected(int id);
     
 public slots:
     void slotAcceptMessage (int id, QString msg, int type);
-    void slotAcceptMeausure (int id, int type, double value);
+    void slotAcceptMeausure (int id, double value, QString type);
     void slotAcceptDeviceConnected (int id );
     void slotAcceptDeviceDisconnected (int id);
 

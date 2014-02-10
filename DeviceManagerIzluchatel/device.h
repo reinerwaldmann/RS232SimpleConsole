@@ -39,7 +39,7 @@ Device * returnMe();
 
 
 
-private:
+protected:
 bool isConnected;
 int id;
 QString name;
@@ -59,10 +59,10 @@ void onPingFailed ();
 
 signals:
 void fireConnected(int id);
-void firePingAccepted(int id);
+///void firePingAccepted(int id);
 void fireDisconnected(int id);
-void fireMeasurementdata (int id, double data);
-void msg (int id, QString imsg,  int type=MSG_DEBUG);
+void fireMeasurementData (int id, double data, QString type);
+void fireMsg (int id, QString imsg,  int type=MSG_DEBUG);
 
 /**
 * @brief ms relays msg with id and type to devman's acceptMessage

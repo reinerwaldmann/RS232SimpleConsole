@@ -11,7 +11,10 @@ timeout=2000;
 
 
 DeviceRS232::~DeviceRS232()
-{}
+{
+    disconnecx();
+
+}
 
 QString DeviceRS232::getPosition()
 {
@@ -27,7 +30,7 @@ void DeviceRS232::setPortname(QString iportname)
 
 int DeviceRS232::connectx()
 {
-    if (!portname.length())
+    if (!port->portName().length())
     {
         ms(tr ("ERR DeviceRS232 no portname specified"), MSG_ERROR);
 
@@ -37,11 +40,11 @@ int DeviceRS232::connectx()
     //port->setPortName(portname);
     if (port->open(QIODevice::ReadWrite | QIODevice::Unbuffered))
     {
-    ms(tr ("MSG DeviceRS232 Port %1 successfully opened").arg (portname), MSG_DEBUG);
+    ms(tr ("MSG DeviceRS232 Port %1 successfully opened").arg (port->portName()), MSG_DEBUG);
     }
     else
     {
-    ms(tr ("ERR DeviceRS232 Port %1 error while opening").arg (portname), MSG_ERROR);
+    ms(tr ("ERR DeviceRS232 Port %1 error while opening").arg (port->portName()), MSG_ERROR);
     return 2;
     }
     return ping();

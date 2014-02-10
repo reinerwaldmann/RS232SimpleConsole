@@ -15,11 +15,11 @@ Device::Device()
 
 Device::~Device()
 {
-    disconnecx();
+    //disconnecx();
 }
 
 
-void Device::setID(char iid)
+void Device::setID(int iid)
 {
     id = iid;
 }
@@ -60,7 +60,7 @@ void Device::setVariableComment(QString iVariableComment)
 
 void Device::onPingFailed()
 {
-    emit firePingFailed(id);
+    emit fireDisconnected(id);
     isConnected=0;
 }
 
@@ -79,7 +79,7 @@ int Device::getTimeout()
 
 void Device::ms(QString imsg, int type)
 {
-    emit msg(id,imsg,type);
+    emit fireMsg(id,imsg,type);
 
 }
 
