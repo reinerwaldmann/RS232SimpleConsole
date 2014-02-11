@@ -5,6 +5,9 @@
 #include "devicemanagerizluchatel.h"
 #include <QPushButton>
 
+
+#include<QDebug>
+
 #define MSG_ERROR 1
 #define MSG_NEUTRAL 0
 #define MSG_GOOD 2

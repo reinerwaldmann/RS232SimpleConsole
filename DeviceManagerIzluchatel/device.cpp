@@ -9,7 +9,7 @@ Device::Device()
     connect (reqtimer, SIGNAL ( timeout()  ), this, SLOT (onPingFailed()) );
     reqtimer->setSingleShot(1);
     type=0; //не определен
-
+    timeout  =5000;
 }
 
 
@@ -60,8 +60,10 @@ void Device::setVariableComment(QString iVariableComment)
 
 void Device::onPingFailed()
 {
-    emit fireDisconnected(id);
-    isConnected=0;
+
+
+    setConnectedState(0);
+
 }
 
 int Device::getType()

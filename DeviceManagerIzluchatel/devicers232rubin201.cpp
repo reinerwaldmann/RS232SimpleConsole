@@ -13,6 +13,7 @@ DeviceRS232Rubin201::DeviceRS232Rubin201()
 
     name = "Рубин 201";
     descr = "Измеритель оптической мощности";
+    timeout=4000;
 }
 
 DeviceRS232Rubin201::~DeviceRS232Rubin201 ()
@@ -103,6 +104,7 @@ int  DeviceRS232Rubin201::measure(QString type)
 //    qDebug ("MEASURE STARTED DEVICE RUBIN");
     if (!isConnected)
         {
+            emit fireDisconnected(id);
             ms("ERR 2651 Not connected",MSG_ERROR);
             return 2691;
         }
@@ -150,7 +152,7 @@ int DeviceRS232Rubin201::sendToPort(QString msg)
         port->write(f);
         ms(QString (">")+msg, MSG_DEBUG);
 
-        reqtimer->start(4000);
+        reqtimer->start(timeout);
 }
 
 

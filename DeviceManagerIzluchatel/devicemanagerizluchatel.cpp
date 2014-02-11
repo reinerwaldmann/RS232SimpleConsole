@@ -40,7 +40,9 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
  *
  *While debugging, the only attached device is slt 0 out 1 which is 1 hash (2*0+1=1)
  **/
-      return (devicesHash.value(id)->measure(type));
+
+     if (!devicesHash.contains(id)) {return 1;}
+     return (devicesHash.value(id)->measure(type));
 
  }
 
@@ -92,17 +94,17 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         if (!desiredid)
         {
-            newid=devicesHash.keys().length();
+            newid=devicesHash.keys().length()+1;
         }
 
 
         idevice->setID(newid);
         devicesHash.insert(newid, idevice);
         UI->displayDevices(); //прямой вызов к интерфейсу, может быть заменён на связь сигнал-слот
-connect (idevice, SIGNAL (fireConnected (int)), this, SLOT (slotAcceptDeviceConnected(int))  );
-connect (idevice, SIGNAL (fireDisconnected (int)), this, SLOT (slotAcceptDeviceDisconnected(int))  );
-connect (idevice, SIGNAL (fireMeasurementData (int, double, QString)), this, SLOT (slotAcceptMeausure(int,double, QString))  );
-connect (idevice, SIGNAL (fireMsg (int, QString, int)), this, SLOT (slotAcceptMessage(int, QString, int))   );
+        connect (idevice, SIGNAL (fireConnected (int)), this, SLOT (slotAcceptDeviceConnected(int))  );
+        connect (idevice, SIGNAL (fireDisconnected (int)), this, SLOT (slotAcceptDeviceDisconnected(int))  );
+        connect (idevice, SIGNAL (fireMeasurementData (int, double, QString)), this, SLOT (slotAcceptMeausure(int,double, QString))  );
+        connect (idevice, SIGNAL (fireMsg (int, QString, int)), this, SLOT (slotAcceptMessage(int, QString, int))   );
 
 
 

@@ -48,8 +48,9 @@ void DeviceManagerIzluchatelUI::displayDevices()
 {
     QList <int> keylist = devman->devicesHash.keys();
 
-    ui->tableWidget->clear();
 
+
+    ui->tableWidget->clear();
     ui->tableWidget->setRowCount(keylist.size());
     ui->tableWidget->setColumnCount(5);
 
@@ -58,10 +59,11 @@ void DeviceManagerIzluchatelUI::displayDevices()
     l<<"Идентификатор"<<"Имя устройства"<<"Состояние"<<"Порт"<<"Проверить связь/Измерить";
     ui->tableWidget->setHorizontalHeaderLabels(l);
 
-
-    char k;
+    int k, r(0);
     foreach (k, keylist)
-    {
+   {
+
+
        QTableWidgetItem * item = new QTableWidgetItem (QString::number (k));
        QTableWidgetItem * item1 = new QTableWidgetItem (devman->devicesHash.value(k)->getName());
        QTableWidgetItem * item2 = new QTableWidgetItem (devman->devicesHash.value(k)->getIsConnected()?"Подключено":"Отключено");
@@ -75,18 +77,18 @@ void DeviceManagerIzluchatelUI::displayDevices()
        item3->setFlags(Qt::NoItemFlags|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
 
-       ui->tableWidget->setItem(k,0,item);
-       ui->tableWidget->setItem(k,1,item1);
-       ui->tableWidget->setItem(k,2,item2);
-       ui->tableWidget->setItem(k,3,item3);
+
+
+       ui->tableWidget->setItem(r,0,item);
+       ui->tableWidget->setItem(r,1,item1);
+       ui->tableWidget->setItem(r,2,item2);
+       ui->tableWidget->setItem(r,3,item3);
 
        QPushButton * conButton = new QPushButton ("Проверить связь");
 
 //        connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
-
-
-       ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(k,4), conButton);
-
+       ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(r,4), conButton);
+       r++;
 
     }
 

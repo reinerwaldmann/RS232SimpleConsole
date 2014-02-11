@@ -1,8 +1,7 @@
 #include "principalwindow.h"
 #include "ui_PrincipalWindow.h"
 #include <QTimer>
-#include "DeviceManagerIzluchatel/devicemanagerizluchatel.h"
-#include "DeviceManagerIzluchatel/devicers232rubin201.h"
+
 
 PrincipalWindow::PrincipalWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,14 +50,21 @@ debug_timer->start(1000);
      //on_pushSend_clicked();
 
 
-     DeviceManagerIzluchatel  *dvm = new DeviceManagerIzluchatel (this, this);
+     //for debugging purposes;;;;
+
+     dvm  = new DeviceManagerIzluchatel (this, this);
      DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 ();
      rdev->setPortname("COM3");
      dvm->addDevice(rdev);
-
-
-
      dvm->connectALL();
+
+    //we connected only one slot yet...accepting meas data
+     connect (dvm, SIGNAL (fireTransitMeasData(int, double, QString)), this, SLOT (slotTestDeviceManager(int, double, QString)));
+
+
+// [turn it on!!!] ;-) //
+
+     //my wiiiinch came today to our city!    [====] // 11.02.2014 ``~~~~~
 
 
 
@@ -257,7 +263,19 @@ return;
 
 void PrincipalWindow::on_pushSend_clicked()
 {
-    send();
+ //   send();
+
+
+    //for debugging purposes;
+
+
+
+//sending reqest
+
+
+    dvm->measure(1, " ");
+
+
 }
 
 
@@ -287,3 +305,13 @@ switch (type)
 
 }
 
+
+
+void PrincipalWindow::slotTestDeviceManager(int id, double value, QString type)
+{
+    ms (tr ("Measurement data came to us!!! id=%1 value=%2 type=%3").arg(id).arg(value).arg (type.toInt()?" дБ":" дБм")  )  ;
+
+
+
+
+}
