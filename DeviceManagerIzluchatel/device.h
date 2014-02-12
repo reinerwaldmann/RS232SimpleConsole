@@ -60,6 +60,11 @@ int timeout; //in milliseconds
 void setConnectedState (bool isState);
 
 
+bool portIsSearched;  //when up, then slot 'disconnected' not to be activated
+
+
+
+
 
 public slots:
 void onPingFailed ();

@@ -22,11 +22,6 @@ public:
     //Error code 6
     int ping ();
 
-    //Error code 7
-    //int fireConnected();
-
-    //Error code 8
-   // int firePingAccepted();
 
     //Error code 9
     int sendToPort(QString msg);  //0 if OK 1 if error

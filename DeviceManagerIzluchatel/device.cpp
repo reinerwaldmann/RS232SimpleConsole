@@ -10,6 +10,8 @@ Device::Device()
     reqtimer->setSingleShot(1);
     type=0; //не определен
     timeout  =5000;
+
+    portIsSearched=0;
 }
 
 
@@ -92,21 +94,20 @@ Device * Device::returnMe()
 
 void Device::setConnectedState (bool isState)
 {
-
-
-    if (isState==isConnected)
- return;
-
-
-
-
+if (isState==isConnected)
+return;
     isConnected=isState;
 
 if (isConnected)
 { emit fireConnected(id);}
 
 else
-{    emit fireDisconnected(id); }
+{
+
+    if (!portIsSearched) emit fireDisconnected(id);
+
+
+}
 
 
 

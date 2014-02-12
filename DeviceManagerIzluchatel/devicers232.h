@@ -18,15 +18,21 @@ virtual     int    connectx();
             void    setPortname (QString iportname);
 
 
+virtual void supersearch (QList<QextPortInfo> inlist);
 
+virtual void search ();
 
 virtual     int    disconnecx();
+
 
 
 protected:
     QextSerialPort * port;
     PortSettings portSettings;
 
+
+    int idInSearchList;
+    QList<QextPortInfo> searchPortLst;
 
 
 
