@@ -60,6 +60,13 @@ debug_timer->start(1000);
 
     //we connected only one slot yet...accepting meas data
      connect (dvm, SIGNAL (fireTransitMeasData(int, double, QString)), this, SLOT (slotTestDeviceManager(int, double, QString)));
+     connect (dvm, SIGNAL (fireDeviceDisconnected(int)), this, SLOT (slotDeviceManagerDeviceDisconnected(int)));
+
+
+
+
+
+
 
 
 // [turn it on!!!] ;-) //
@@ -311,7 +318,10 @@ void PrincipalWindow::slotTestDeviceManager(int id, double value, QString type)
 {
     ms (tr ("Measurement data came to us!!! id=%1 value=%2 type=%3").arg(id).arg(value).arg (type.toInt()?" дБ":" дБм")  )  ;
 
-
-
-
 }
+
+ void PrincipalWindow::slotDeviceManagerDeviceDisconnected(int id)
+ {
+     ms (tr ("Device Disconnected %1").arg(id));
+
+ }

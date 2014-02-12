@@ -92,7 +92,15 @@ Device * Device::returnMe()
 
 void Device::setConnectedState (bool isState)
 {
-isConnected=isState;
+
+
+    if (isState==isConnected)
+ return;
+
+
+
+
+    isConnected=isState;
 
 if (isConnected)
 { emit fireConnected(id);}

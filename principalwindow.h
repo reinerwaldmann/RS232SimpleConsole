@@ -59,7 +59,7 @@ private slots:
     void on_pushSend_clicked();
 
     void slotTestDeviceManager(int id, double value, QString type);
-
+    void slotDeviceManagerDeviceDisconnected(int id);
 
 };
 

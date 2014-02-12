@@ -14,6 +14,10 @@ DeviceRS232Rubin201::DeviceRS232Rubin201()
     name = "Рубин 201";
     descr = "Измеритель оптической мощности";
     timeout=4000;
+
+
+    waitingForConnect=0;
+
 }
 
 DeviceRS232Rubin201::~DeviceRS232Rubin201 ()
@@ -53,13 +57,17 @@ void DeviceRS232Rubin201::onDataAvailable()
         }
 
         if ( (buffer.size()>2)&& (buffer.at(0)==0xffffffffffffff82)  ) //можно пробовать нечто интерпретировать
-        {
-            //emit fireConnected(id);
+       {
+            if (waitingForConnect)
+            {
+             setConnectedState(1);
+             //waitingForConnect=0; //при этом закомментированном начинает работать нормально!
+             return;
+            }
 
-            setConnectedState(1);
 
 
-            //firePingAccepted();
+
             //int t = buffer.at(1)<<8 + buffer.at(2);
             unsigned char high =  (unsigned char ) buffer.at(1);
             unsigned char low=  (unsigned char ) buffer.at(2);
@@ -77,6 +85,9 @@ void DeviceRS232Rubin201::onDataAvailable()
 */
 
             //devman->acceptMeausure(result, id, buffer.at(4));
+
+
+
 
             fireMeasurementData(id,result, QString::number(buffer.at(4)));
 
@@ -102,6 +113,10 @@ int  DeviceRS232Rubin201::measure(QString type)
 
     //for debugging
 //    qDebug ("MEASURE STARTED DEVICE RUBIN");
+
+
+    waitingForConnect=0;
+
     if (!isConnected)
         {
             emit fireDisconnected(id);
@@ -171,11 +186,16 @@ int DeviceRS232Rubin201::sendToPortMeasureValue()
 void  DeviceRS232Rubin201::onPingFired ()
 {
     sendToPort("0x82");
+
 }
 
 int DeviceRS232Rubin201::ping()     //measurement is a ping, actually
 {
       QTimer::singleShot(3000, this, SLOT(onPingFired()));
+
+      waitingForConnect=1;
+
+
 
 
 }

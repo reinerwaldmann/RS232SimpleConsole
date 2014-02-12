@@ -2,6 +2,7 @@
 #define DEVICERS232RUBIN201_H
 #include "devicers232.h"
 #include <QTimer>
+#include <qDebug>
 
 class DeviceRS232Rubin201 : public DeviceRS232
 {
@@ -41,6 +42,11 @@ public:
     QByteArray buffer;
 
 
+
+private:
+
+    bool waitingForConnect; // for to separate measurements from just pinging
+    //1 is waiting 0 is not waiting
 
 
 
