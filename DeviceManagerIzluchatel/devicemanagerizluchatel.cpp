@@ -12,15 +12,21 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QO
 DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 {
 
+
+
+
         QList <int> keylist = devicesHash.keys();
         char key;
         foreach (key, keylist)
         {
             devicesHash.value(key)->disconnecx();
-            delete devicesHash.value(key);
+            delete devicesHash.value(key); // почему-то на этой строчке  после поиска вылетает при закрытии!!!
         }
 
     devicesHash.clear();
+
+
+
 }
 
 
@@ -181,3 +187,43 @@ void DeviceManagerIzluchatel::slotAcceptDeviceConnected(int id)
 
 
     }
+
+
+void DeviceManagerIzluchatel::searchRS232DevicesOnPorts  ()
+{
+
+
+
+    QList<QextPortInfo> ports = QextSerialEnumerator::getPorts();
+    QList<QextPortInfo> selectedports;
+
+
+slotAcceptMessage(0,"searchRS232DevicesOnPOrts triggered, alpha version DEBUG",MSG_DEBUG);
+    slotAcceptMessage(0,"enumName \t friendName \t physName \t portName",MSG_DEBUG);
+
+
+       foreach (QextPortInfo port, ports) {
+           // inspect port...
+       //мы фильтруем порты, чтоб отобрать только те, которые относятся к MOXA
+    /// эту строчку СНЕСТИ, если требуестя использовать другие порты, от MOXA отличные
+           //возможно, лучше внести опцию работы с отличными от MOXA разветвителями в настройки
+
+           if (!port.friendName.contains("MOXA"))
+                     {
+               continue;
+           }
+           slotAcceptMessage(0, tr ("%1 \t %2 \t %3 \t %4").arg(port.enumName).arg(port.friendName).arg(port.physName).arg(port.portName), MSG_DEBUG );
+           selectedports.append(port);
+
+       }
+
+
+       //для дебага - ищем устройство из выбранных портов
+
+       dynamic_cast <DeviceRS232Rubin201*> ( devicesHash.value(1) )->supersearch(selectedports);
+
+
+
+
+
+}

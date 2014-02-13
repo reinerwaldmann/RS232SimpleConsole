@@ -54,9 +54,9 @@ debug_timer->start(1000);
 
      dvm  = new DeviceManagerIzluchatel (this, this);
      DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 ();
-     rdev->setPortname("COM3");
+     //rdev->setPortname("COM3");
      dvm->addDevice(rdev);
-     dvm->connectALL();
+     //dvm->connectALL();
 
     //we connected only one slot yet...accepting meas data
      connect (dvm, SIGNAL (fireTransitMeasData(int, double, QString)), this, SLOT (slotTestDeviceManager(int, double, QString)));

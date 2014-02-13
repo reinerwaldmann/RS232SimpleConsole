@@ -9,12 +9,16 @@ descr="RS232 device";
 timeout=2000;
 
 
-}
+ }
 
 
 DeviceRS232::~DeviceRS232()
 {
-    disconnecx();
+
+
+
+    port->close();
+
 
 }
 
@@ -55,49 +59,137 @@ int DeviceRS232::connectx()
 
 int DeviceRS232::disconnecx()
 {
+
+
+
+
 port->close();
 setConnectedState(0);
+
+
+return 0;
 }
 
 
 void DeviceRS232::supersearch (QList<QextPortInfo> inlist)
 {
-    //суперметод, запускаем процесс поиска
+    ms("Search_Started",MSG_DEBUG);
+//суперметод, запускаем процесс поиска
 idInSearchList=-1;
-
 portIsSearched=1;
 searchPortLst = inlist;
-
-
-
-
-
 search();
-
-
 }
 
 void DeviceRS232::search ()
 {
     //подметод
-
     idInSearchList++;
-    if (idInSearchList>=inlist.size())
+    ms(tr ("Search: idInSearchList=%1").arg(idInSearchList),MSG_DEBUG);
+
+
+    if (idInSearchList>=searchPortLst.size())
     {
         //ругнулись на то, что найти не удалось
         ms(tr ("Найти устройство не вышло id=%1").arg(id), MSG_ERROR);
+        emit fireDisconnected(id); //чтобы менеджер знал, что найти не удалось!
         portIsSearched=0;//сняли флаг поиска, так как поиск завершён, пусть и неудачей
-        searchPortLst.clear(); //чтоб даже искать не пытался вдруг
+     //   searchPortLst.clear(); //чтоб даже искать не пытался вдруг
         return;
 
     }
 
 
-    //собственно действия - напишем их завтра, так как уже пора домой!
+    //собственно, действия
+    //устанавливаем порт
+    port->setPortName(searchPortLst.at(idInSearchList).portName);
+
+
+        ms(tr ("Search: portname=%1").arg(port->portName()),MSG_DEBUG);
+
+//стрёмная хрень - идея в том, чтобы если нет коннекта, то подвигался по списку ещё
+    /*while (connectx()) {
+        idInSearchList++;
+        port->setPortName(searchPortLst.at(idInSearchList).portName);
+    }*/
+
+        connectx();
+     ms(tr ("Connect triggered"),MSG_DEBUG);
+
+
+    //и мы пытаемся подключиться. Если подключиться получилось, то устройство
+    //запустит слот fireConnected
+    /*
+        Дальше вопрос - либо сносить подключенный порт из списка и возвращать список, либо
+        менеджер сам по пришествии сигнала от того девайса, который сейчас в активном поиске,
+        выведет ошибку (если не нашёлся), а если нашёлся, то перед подачей списка другому устройству
+        сам посносит оттуда порты подключенных устройств.
+
+        УПРТСТЬ!!!!!!Ё!!!!Омск!!!!!
+
+
+        Важный момент! до тех пор пока не случилось коннекта или дисконнекта, менеджер не
+        должен разрешать поиск порта, не то конфликт и ужос. 13 портов тестятся 40 сек, не менее!
 
 
 
+    */
 
 
 
 }
+
+void DeviceRS232::setConnectedState (bool isState)
+{
+
+    if (portIsSearched) //если мы ищем порт
+
+    {
+        if (!isState)  //, то дело лишь в том, что на  данном порту нет устройства
+
+        {
+            port->close(); //порт закрываем
+            ms(tr ("setConnectedState triggered with 0 parameter, starting search"),MSG_DEBUG); //рассказываем, что таки нет устройства
+            search (); // и запускаем поиск обратно, он сам уже начнёт другой порт опрашивать
+
+        return; //вернуться из функции, чтоб левого ничего не запустить
+        }
+
+
+    }
+
+
+    //теперь если порт не ищем
+
+    if (isState==isConnected)  //если состояние и так такое, как пришло
+    return; //нет нужды сообщать о его изменении
+
+
+    isConnected=isState;  //иначе присвариваем
+
+    if (isConnected) //если наконец подключились
+    {
+      emit fireConnected(id); //рассказать, что подключились
+      portIsSearched=0; //и отключить поиск порта,если он был включен
+    }
+
+   else //иначе, если мы отключены
+    {
+            emit fireDisconnected(id);//об этом надо рассказать
+    }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+

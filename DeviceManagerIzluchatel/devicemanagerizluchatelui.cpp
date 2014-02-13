@@ -97,3 +97,11 @@ void DeviceManagerIzluchatelUI::displayDevices()
 
 
 }
+
+void DeviceManagerIzluchatelUI::on_searchDevice_clicked()
+{
+devman->searchRS232DevicesOnPorts();
+
+
+
+}

@@ -17,7 +17,7 @@ Device::Device()
 
 Device::~Device()
 {
-    //disconnecx();
+
 }
 
 
@@ -103,16 +103,9 @@ if (isConnected)
 
 else
 {
-
     if (!portIsSearched) emit fireDisconnected(id);
 
-
 }
-
-
-
-
-
 
 }
 

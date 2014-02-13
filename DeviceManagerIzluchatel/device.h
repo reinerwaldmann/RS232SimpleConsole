@@ -3,7 +3,7 @@
 
 #include <QTimer>
 
-
+#include <qDebug>
 
 #define MSG_ERROR 1
 #define MSG_NEUTRAL 0
@@ -25,6 +25,13 @@ virtual int disconnecx()=0;
 virtual int ping()=0;
 virtual int measure(QString type="")=0;
 virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
+
+
+//так как иначе сильно ругается при закрытии менеджера, видимо там левое устройство или не может выбрать правильно метод
+
+
+
+
 
 void setID (int iid);
 int getID();
@@ -57,7 +64,7 @@ QString descr;
 QTimer * reqtimer; //таймер, который используется для таймаутов
 int type; //1 - RS232
 int timeout; //in milliseconds
-void setConnectedState (bool isState);
+virtual void setConnectedState (bool isState);
 
 
 bool portIsSearched;  //when up, then slot 'disconnected' not to be activated

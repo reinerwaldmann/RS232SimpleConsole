@@ -115,6 +115,9 @@ public:
 
 
 
+    void searchRS232DevicesOnPorts  ();
+
+
 signals:
 
     void fireTransitMeasData(int id,  double value, QString type);

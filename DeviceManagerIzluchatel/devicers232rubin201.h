@@ -36,9 +36,8 @@ public:
 
     QByteArray buffer;
 
+protected:
 
-
-private:
 
     bool waitingForConnect; // for to separate measurements from just pinging
     //1 is waiting 0 is not waiting

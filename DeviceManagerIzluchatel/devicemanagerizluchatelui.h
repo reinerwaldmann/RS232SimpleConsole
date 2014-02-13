@@ -41,6 +41,9 @@ public:
 
     DeviceManagerIzluchatel * devman;
 
+private slots:
+    void on_searchDevice_clicked();
+
 private:
     Ui::DeviceManagerIzluchatelUI *ui;
 };

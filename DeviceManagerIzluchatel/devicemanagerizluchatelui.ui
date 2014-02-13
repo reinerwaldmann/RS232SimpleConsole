@@ -18,6 +18,13 @@
     <widget class="QTableWidget" name="tableWidget"/>
    </item>
    <item>
+    <widget class="QPushButton" name="searchDevice">
+     <property name="text">
+      <string>КНОПКА!</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTextEdit" name="console"/>
    </item>
   </layout>

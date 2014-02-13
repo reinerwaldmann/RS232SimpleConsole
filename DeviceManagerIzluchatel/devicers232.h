@@ -3,6 +3,7 @@
 #include "qextserialport.h"
 #include "qextserialenumerator.h"
 #include "device.h"
+#include <QDebug>
 
 class DeviceRS232 : public Device
 {
@@ -26,6 +27,8 @@ virtual     int    disconnecx();
 
 
 
+
+
 protected:
     QextSerialPort * port;
     PortSettings portSettings;
@@ -34,6 +37,7 @@ protected:
     int idInSearchList;
     QList<QextPortInfo> searchPortLst;
 
+    virtual void setConnectedState (bool isState);
 
 
 };

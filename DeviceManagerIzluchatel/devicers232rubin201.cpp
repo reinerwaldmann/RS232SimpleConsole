@@ -13,7 +13,7 @@ DeviceRS232Rubin201::DeviceRS232Rubin201()
 
     name = "Рубин 201";
     descr = "Измеритель оптической мощности";
-    timeout=4000;
+    timeout=2000;
 
 
     waitingForConnect=0;
