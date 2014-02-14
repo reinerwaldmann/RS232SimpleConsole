@@ -3,23 +3,14 @@
 DeviceRS232::DeviceRS232()
 {
 type=1; //RS232
-
 descr="RS232 device";
-
 timeout=2000;
-
-
  }
 
 
 DeviceRS232::~DeviceRS232()
 {
-
-
-
     port->close();
-
-
 }
 
 QString DeviceRS232::getPosition()
@@ -30,7 +21,6 @@ QString DeviceRS232::getPosition()
 void DeviceRS232::setPortname(QString iportname)
 {
     port->setPortName(iportname);
-
 }
 
 
@@ -53,7 +43,10 @@ int DeviceRS232::connectx()
     ms(tr ("ERR DeviceRS232 Port %1 error while opening").arg (port->portName()), MSG_ERROR);
     return 2;
     }
+
     return ping();
+
+
 }
 
 
@@ -73,7 +66,16 @@ return 0;
 
 void DeviceRS232::supersearch (QList<QextPortInfo> inlist)
 {
+
+
+
     ms("Search_Started",MSG_DEBUG);
+
+
+
+
+
+
 //суперметод, запускаем процесс поиска
 idInSearchList=-1;
 portIsSearched=1;
@@ -107,13 +109,15 @@ void DeviceRS232::search ()
 
         ms(tr ("Search: portname=%1").arg(port->portName()),MSG_DEBUG);
 
-//стрёмная хрень - идея в том, чтобы если нет коннекта, то подвигался по списку ещё
-    /*while (connectx()) {
+
+        //если законнектиться не вышло, что может произойти в случае, если на порту уже есть какое-то устройство,
+        //то надо продвигаться дальше по портам
+    while (connectx()) {
         idInSearchList++;
         port->setPortName(searchPortLst.at(idInSearchList).portName);
-    }*/
+    }
 
-        connectx();
+        //connectx();
      ms(tr ("Connect triggered"),MSG_DEBUG);
 
 

@@ -15,17 +15,81 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTableWidget" name="tableWidget"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="searchDevice">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>КНОПКА!</string>
+      <string>Подключенные устройства</string>
      </property>
     </widget>
    </item>
    <item>
+    <widget class="QTableWidget" name="tableWidget"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Список неподключенных устройств</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboListOfDevices">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchDevice">
+       <property name="text">
+        <string>Искать</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QTextEdit" name="console"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Уровень вывода сообщений</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboLevelOfOutput">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Только ошибки</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ошибки и сообщения</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Всё</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

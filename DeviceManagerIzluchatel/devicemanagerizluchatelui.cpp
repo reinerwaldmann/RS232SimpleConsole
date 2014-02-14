@@ -7,6 +7,7 @@ DeviceManagerIzluchatelUI::DeviceManagerIzluchatelUI(DeviceManagerIzluchatel *id
 {
     ui->setupUi(this);
     devman = idevman;
+    ui->comboLevelOfOutput->setCurrentIndex(2);
 
 }
 
@@ -18,6 +19,9 @@ DeviceManagerIzluchatelUI::~DeviceManagerIzluchatelUI()
 
 void DeviceManagerIzluchatelUI::acceptMessage(QString msg, int id, int type)
 {
+
+    char level = ui->comboLevelOfOutput->currentIndex();
+
     switch (type)
         {
 
@@ -25,12 +29,15 @@ void DeviceManagerIzluchatelUI::acceptMessage(QString msg, int id, int type)
             ui->console->append(tr( "<font color=red> ID=%1  %2 </font>" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_GOOD:
+            if (level)
             ui->console->append(tr( "<font color=green> ID=%1 %2 </font>" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_NEUTRAL:
+            if (level)
             ui->console->append(tr( "ID=%1 %2" ).arg(QString::number(id)).arg(msg) );
             break;
         case MSG_DEBUG: //yet debug flag not implemented
+            if (level>1)
             ui->console->append(tr( "ID=%1 %2" ).arg(QString::number(id)).arg(msg) );
             break;
         }
@@ -46,6 +53,9 @@ void DeviceManagerIzluchatelUI::acceptPing(int id)
 
 void DeviceManagerIzluchatelUI::displayDevices()
 {
+
+
+
     QList <int> keylist = devman->devicesHash.keys();
 
 
@@ -100,8 +110,21 @@ void DeviceManagerIzluchatelUI::displayDevices()
 
 void DeviceManagerIzluchatelUI::on_searchDevice_clicked()
 {
-devman->searchRS232DevicesOnPorts();
-
+devman->searchRS232DevicesOnPorts( ui->comboListOfDevices->itemData(ui->comboListOfDevices->currentIndex()).toInt()  );
 
 
 }
+
+void DeviceManagerIzluchatelUI::displayActiveDevices()
+{
+    ui->comboListOfDevices->clear();
+
+    foreach (Device * dev, devman->activeDevicesHash)
+    {
+        //в списке активных те же идентификаторы, какие будут и в списке устройств
+        ui->comboListOfDevices->addItem( dev->getName(), dev->getID());
+    }
+
+}
+
+

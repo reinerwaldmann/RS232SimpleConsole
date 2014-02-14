@@ -32,6 +32,11 @@ int Device::getID()
 }
 
 
+int  Device::getUniqueType()
+{
+    return uniqueType;
+}
+
 bool Device::getIsConnected()
 {
     return isConnected;

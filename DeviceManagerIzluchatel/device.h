@@ -36,6 +36,9 @@ virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
 void setID (int iid);
 int getID();
 
+int  getUniqueType();
+
+
 bool getIsConnected();
 
 QString getName();
@@ -63,6 +66,9 @@ QString variableComment;
 QString descr;
 QTimer * reqtimer; //таймер, который используется для таймаутов
 int type; //1 - RS232
+
+int uniqueType; //уникальный идентификатор типа устройства
+
 int timeout; //in milliseconds
 virtual void setConnectedState (bool isState);
 

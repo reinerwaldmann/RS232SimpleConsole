@@ -18,6 +18,8 @@ DeviceRS232Rubin201::DeviceRS232Rubin201()
 
     waitingForConnect=0;
 
+    uniqueType=1;
+
 }
 
 DeviceRS232Rubin201::~DeviceRS232Rubin201 ()
@@ -195,6 +197,7 @@ int DeviceRS232Rubin201::ping()     //measurement is a ping, actually
 
       waitingForConnect=1;
 
+        return 0;
 
 
 

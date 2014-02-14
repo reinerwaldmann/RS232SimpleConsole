@@ -87,14 +87,18 @@ public:
      * @return 0 all is OK 1 same id already present
      */
     //EC11
-    int addDevice (Device * idevice, int desiredid=0);
+    int addDevice (Device *idevice, bool where,  int desiredid=0);
+
 
     /*inits the deviceshashs*/
-    int initList ();
+    int initList (QString ifilename);
      /**
      * @brief devicesHash hashlist of the devices
      * char is the id of the device, unique in this manager
      */
+
+    int initActiveDeviceList (QString ifilename);
+
 
   void   setStandID(QString id);
 
@@ -102,6 +106,7 @@ public:
 
 
     QHash <int, Device * > devicesHash;
+    QHash <int, Device * > activeDevicesHash; //ненайденное оборудование
 
 
     /**
@@ -115,7 +120,7 @@ public:
 
 
 
-    void searchRS232DevicesOnPorts  ();
+    int searchRS232DevicesOnPorts  (int idInActiveDevList);
 
 
 signals:

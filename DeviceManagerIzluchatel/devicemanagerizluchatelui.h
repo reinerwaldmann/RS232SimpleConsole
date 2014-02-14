@@ -36,6 +36,8 @@ public:
      *A way of displaying the devices  and what is going on with them
     */
     void displayDevices();
+    void displayActiveDevices();
+
 
 
 
