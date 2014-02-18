@@ -37,6 +37,8 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
 
 
+
+
 }
 
 
@@ -158,8 +160,117 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
     {
 
         devicesHash.clear();
-        //в будущем будет инитить хеш устройств из xml файла
-        //пока, для дебага, будем здесь добавлять разные устройства
+
+        //реализуем добавление из xml файла
+
+        if (ifilename.isEmpty()) return 1;
+
+
+        QFile  infile (ifilename);
+
+        if (!infile.open(QIODevice::ReadOnly | QIODevice::Text) )
+
+        {
+            slotAcceptMessage(0, "Unable to open file with devices settings", MSG_ERROR);
+            return 2;
+        }
+
+
+
+            QDomDocument doc;
+
+            //QDomDocument doc("mydocument");
+            if (!doc.setContent(&infile))
+            {
+              slotAcceptMessage(0, "Error while setting content of the domdocument", MSG_ERROR);
+                return 3 ;
+
+            }
+
+
+                QDomElement docElem = doc.documentElement();
+
+                    //QString rootTag = docElem.tagName(); // берёт корневой тег
+                //по состоянию на 18FEB2014 корневой main_part, но это изменится!
+
+
+                //берём список элементов с тегом device
+                QDomNodeList nodeList = docElem.elementsByTagName("device");
+
+                foreach (QDomNode node, nodeList)
+                {
+                    //начинаем магию конфигурирования списка устройств
+                    //ВНИМАНИЕ! не активных, а просто устройств
+                    //подразумевается, что в файле устройства, которые на своих местах
+
+
+                       QDomElement el = node.toElement();
+                       int nodeid = el.attribute("id", "0").toInt();
+
+                       int nodetype = el.attribute("type", "0").toInt();
+
+                       int nodeuniquetype = el.attribute("unique_type", "0").toInt();
+
+
+                       if (!nodeid)
+                       {
+                           slotAcceptMessage( 0, "Error in XML: no id", MSG_ERROR);
+                           continue;
+
+                       }
+
+                       if (!nodetype)
+                       {
+                           slotAcceptMessage( 0, "Error in XML: no type", MSG_ERROR);
+                           continue;
+
+                       }
+
+                       if (!nodeuniquetype)
+                       {
+                           slotAcceptMessage( 0, "Error in XML: no uniquetype", MSG_ERROR);
+                           continue;
+
+                       }
+
+                       Device * dev;
+
+                       switch (nodeuniquetype)
+                       {
+                        case 1:
+                           dev = new DeviceRS232Rubin201 ();
+                           dev->setID(nodeid);
+                           dev->configureViaXml (node);
+
+                           break;
+
+
+                       default:
+
+
+                       break;
+                       }
+
+
+                        addDevice(dev,1,nodeid);
+
+
+                }
+
+
+                        connectALL();
+
+
+
+
+
+
+
+
+
+
+
+
 
         return 0;
 
@@ -227,6 +338,10 @@ void DeviceManagerIzluchatel::slotAcceptDeviceConnected(int id)
         {
             addDevice(activeDevicesHash.value(id), 1, id); //добавляем устройство в список найденных  устройств
             activeDevicesHash.remove(id); //сносим устройство из списка активных устройств
+            UI->displayActiveDevices();
+
+            if (activeDevicesHash.isEmpty()) savePositionsOftheDevices(tr("devsettings_%1").arg(currentstandid));
+
          }
 
 
@@ -309,5 +424,58 @@ int DeviceManagerIzluchatel::searchRS232DevicesOnPorts  (int idInActiveDevList)
         }
 
 
+return 0;
+
+}
+
+
+int DeviceManagerIzluchatel::savePositionsOftheDevices (QString ifilename)
+{
+
+
+    QDomDocument doc (tr ("DevicesSettings_%1").arg(currentstandid));
+
+
+    //doc.appendChild(QDomText ());
+
+    /*QDomText txxt = doc.createTextNode("service_part");
+    doc.appendChild(txxt);
+*/
+
+
+
+    QDomElement main_part = doc.createElement("main_part");
+   doc.appendChild(main_part);
+
+    foreach (Device * dev, devicesHash)
+    {
+        main_part.appendChild(dev->getXMLPOsition(&doc));
+
+    }
+
+
+
+      QFile file(ifilename);
+
+      if (!file.open(QIODevice::WriteOnly))
+      {
+
+          slotAcceptMessage(0, "Unable to save XML settings", MSG_ERROR);
+          return 1;
+
+      }
+
+  /*    QXmlStreamWriter xmlWriter(&file);
+       xmlWriter.setAutoFormatting(true);
+       xmlWriter.writeStartDocument();
+*/
+       //xmlWriter.write
+      QTextStream  stream (&file);
+      stream << doc.toString(10);
+
+    stream.flush();
+    file.close();
+
+    return 0;
 
 }

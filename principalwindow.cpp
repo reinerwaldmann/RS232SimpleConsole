@@ -54,7 +54,7 @@ debug_timer->start(1000);
 
      dvm  = new DeviceManagerIzluchatel (this, this);
 
-
+        dvm->currentstandid = 183;
 
 
 

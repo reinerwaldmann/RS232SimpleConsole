@@ -2,10 +2,15 @@
 #define DEVICEMANAGERIZLUCHATEL_H
 
 #include <QObject>
-#include "./principalwindow.h"
+#include <QFile>
+#include <QXmlStreamWriter>
+#include <QDomText>
+#include <QDomElement>
+
+
+
 #include "device.h"
-
-
+#include "./principalwindow.h"
 #include "devicemanagerizluchatelui.h"
 
 
@@ -98,6 +103,17 @@ public:
      */
 
     int initActiveDeviceList (QString ifilename);
+
+    /**
+     * @brief savePositionsOftheDevices
+     * saves ports and optionally other settings of currently connected devices to the
+     * xml file. Every device produces a verion of xml by itself.
+     * @param ifilename
+     * @return
+     */
+
+    int savePositionsOftheDevices (QString ifilename);
+
 
 
   void   setStandID(QString id);

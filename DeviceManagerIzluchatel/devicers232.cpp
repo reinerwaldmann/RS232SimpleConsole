@@ -13,6 +13,32 @@ DeviceRS232::~DeviceRS232()
     port->close();
 }
 
+
+int DeviceRS232::configureViaXml (QDomElement iel)
+{
+QDomNodeList nodeList = docElem.elementsByTagName("portname");
+if (nodeList.isEmpty())
+{
+    ms("Error: no portname section in XML", MSG_ERROR);
+    return 1;
+}
+
+QString portnamex = nodeList.at(0).toElement().childNodes().at(0).toText();
+
+if (portnamex.isEmpty())
+{
+    ms("Error: portname section in XML is empty", MSG_ERROR);
+    return 1;
+}
+
+port->setPortName(portnamex);
+
+
+}
+
+
+
+
 QString DeviceRS232::getPosition()
 {
     return port->portName();

@@ -27,6 +27,9 @@ virtual     int    disconnecx();
 
 
 
+virtual int configureViaXml (QDomElement iel);
+
+
 
 
 protected:

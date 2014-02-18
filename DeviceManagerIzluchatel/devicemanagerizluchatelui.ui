@@ -53,6 +53,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QPushButton" name="searchDevice_2">
+     <property name="text">
+      <string>SAVE</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTextEdit" name="console"/>
    </item>
    <item>

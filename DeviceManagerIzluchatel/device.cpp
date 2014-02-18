@@ -114,3 +114,25 @@ else
 
 }
 
+
+
+QDomElement Device::getXMLPOsition ( QDomDocument * idoc)
+{
+
+
+
+
+
+    QDomElement node=idoc->createElement("device");
+    ///node.setTagName("device");
+    node.setAttribute("id", id );
+    node.setAttribute("unique_type", uniqueType);
+    node.setAttribute("type", type);
+
+    return node;
+
+
+
+
+
+}

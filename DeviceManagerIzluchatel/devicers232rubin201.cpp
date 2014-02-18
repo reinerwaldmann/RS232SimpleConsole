@@ -202,3 +202,39 @@ int DeviceRS232Rubin201::ping()     //measurement is a ping, actually
 
 
 }
+
+
+QDomElement DeviceRS232Rubin201::getXMLPOsition(QDomDocument * idoc)
+{
+
+   /* QDomElement node ();
+    node.setTagName("device");
+    node.setAttribute("id", id );
+    node.setAttribute("unique_type", uniqueType);
+    node.setAttribute("type", type);
+*/
+
+    QDomElement node = Device::getXMLPOsition(idoc);
+
+
+
+    QDomElement val = idoc->createElement("portname");
+
+
+    QDomText txt = idoc->createTextNode(port->portName()) ;
+    //txt.setData(port->portName());
+//    txt.setNodeValue(port->portName());
+
+    val.appendChild(txt);
+    node.appendChild(val);
+
+
+
+    return node;
+
+
+
+
+
+
+}

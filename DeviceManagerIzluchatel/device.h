@@ -2,8 +2,11 @@
 #define DEVICE_H
 
 #include <QTimer>
-
 #include <qDebug>
+#include <QDomNode>
+
+#include <QDomElement>
+
 
 #define MSG_ERROR 1
 #define MSG_NEUTRAL 0
@@ -25,7 +28,10 @@ virtual int disconnecx()=0;
 virtual int ping()=0;
 virtual int measure(QString type="")=0;
 virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
+virtual QDomElement  getXMLPOsition (QDomDocument * idoc); //tels the position and other connection parameters in XML format
 
+
+virtual int configureViaXml (QDomElement iel)=0; //in future this code must form another constructor
 
 //так как иначе сильно ругается при закрытии менеджера, видимо там левое устройство или не может выбрать правильно метод
 
@@ -74,6 +80,9 @@ virtual void setConnectedState (bool isState);
 
 
 bool portIsSearched;  //when up, then slot 'disconnected' not to be activated
+
+
+
 
 
 

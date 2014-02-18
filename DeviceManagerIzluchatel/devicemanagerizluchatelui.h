@@ -46,6 +46,8 @@ public:
 private slots:
     void on_searchDevice_clicked();
 
+    void on_searchDevice_2_clicked();
+
 private:
     Ui::DeviceManagerIzluchatelUI *ui;
 };

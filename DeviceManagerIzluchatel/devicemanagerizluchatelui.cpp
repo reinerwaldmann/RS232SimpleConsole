@@ -119,6 +119,8 @@ void DeviceManagerIzluchatelUI::displayActiveDevices()
 {
     ui->comboListOfDevices->clear();
 
+     ui->searchDevice->setEnabled(!devman->activeDevicesHash.isEmpty());
+
     foreach (Device * dev, devman->activeDevicesHash)
     {
         //в списке активных те же идентификаторы, какие будут и в списке устройств
@@ -128,3 +130,8 @@ void DeviceManagerIzluchatelUI::displayActiveDevices()
 }
 
 
+
+void DeviceManagerIzluchatelUI::on_searchDevice_2_clicked()
+{
+devman->savePositionsOftheDevices ("ololo.xml");
+}

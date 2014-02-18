@@ -33,6 +33,7 @@ public:
 
 
 
+    QDomElement getXMLPOsition(QDomDocument * idoc);
 
     QByteArray buffer;
 
