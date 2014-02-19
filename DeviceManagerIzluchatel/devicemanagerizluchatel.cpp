@@ -1,17 +1,34 @@
 #include "devicemanagerizluchatel.h"
 
-DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow *iprincipal, QObject *parent):
+DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow * iprincipal, int icurrentstandid, QObject *parent):
     QObject(parent)
 {
-    principal = dynamic_cast  <PrincipalWindow*> (parent);
+    //principal = dynamic_cast  <PrincipalWindow*> (parent);
+    principal = iprincipal;
+
     UI = new DeviceManagerIzluchatelUI (this);
     UI->show();
 
+    currentstandid=icurrentstandid;
+
+    slotAcceptMessage(0, tr("currentstandid=%1").arg(currentstandid), MSG_NEUTRAL);
+
 
     //для дебага
-    initActiveDeviceList(" ");
+    //initActiveDeviceList(" ");
 
+    char err (0);
+    if (initList(tr("devsettings_%1.xml").arg(currentstandid))) //если попытки инициализровать список так не увенчались успехом
+    {
 
+        //инитим список активных
+        if (initActiveDeviceList(" "))
+        {
+
+            slotAcceptMessage(0, tr("Фатальная ошибка %1 - отсутствуют данные об устройствах в стенде").arg(err), MSG_ERROR);
+        }
+
+    }
 
 
 }
@@ -171,7 +188,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
         if (!infile.open(QIODevice::ReadOnly | QIODevice::Text) )
 
         {
-            slotAcceptMessage(0, "Unable to open file with devices settings", MSG_ERROR);
+            slotAcceptMessage(0, "initlist Unable to open file with devices settings", MSG_DEBUG);
             return 2;
         }
 
@@ -182,7 +199,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
             //QDomDocument doc("mydocument");
             if (!doc.setContent(&infile))
             {
-              slotAcceptMessage(0, "Error while setting content of the domdocument", MSG_ERROR);
+              slotAcceptMessage(0, "initlist Error while setting content of the domdocument", MSG_ERROR);
                 return 3 ;
 
             }
@@ -197,8 +214,12 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
                 //берём список элементов с тегом device
                 QDomNodeList nodeList = docElem.elementsByTagName("device");
 
-                foreach (QDomNode node, nodeList)
+                for (int i=0; i<nodeList.size(); i++)
+
+//                foreach (QDomNode node, nodeList)
                 {
+
+                    QDomNode node = nodeList.at(i);
                     //начинаем магию конфигурирования списка устройств
                     //ВНИМАНИЕ! не активных, а просто устройств
                     //подразумевается, что в файле устройства, которые на своих местах
@@ -240,7 +261,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
                         case 1:
                            dev = new DeviceRS232Rubin201 ();
                            dev->setID(nodeid);
-                           dev->configureViaXml (node);
+                           dev->configureViaXml (node.toElement());
 
                            break;
 
@@ -263,15 +284,6 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
 
 
-
-
-
-
-
-
-
-
-
         return 0;
 
 
@@ -281,6 +293,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
 int DeviceManagerIzluchatel::initActiveDeviceList(QString ifilename)
     {
+
 
 
 /*Данная функция отрабатывает, если обнаружен файл с описанием требований к устройствам.
@@ -296,13 +309,13 @@ int DeviceManagerIzluchatel::initActiveDeviceList(QString ifilename)
     return 0;
     }
 
-void DeviceManagerIzluchatel::setStandID(QString id)
+void DeviceManagerIzluchatel::setStandID(int id)
 {
 currentstandid=id;
 }
 
 
-QString DeviceManagerIzluchatel::getStandID()
+int DeviceManagerIzluchatel::getStandID()
 {
 return currentstandid;
 }
@@ -340,7 +353,7 @@ void DeviceManagerIzluchatel::slotAcceptDeviceConnected(int id)
             activeDevicesHash.remove(id); //сносим устройство из списка активных устройств
             UI->displayActiveDevices();
 
-            if (activeDevicesHash.isEmpty()) savePositionsOftheDevices(tr("devsettings_%1").arg(currentstandid));
+            if (activeDevicesHash.isEmpty()) savePositionsOftheDevices(tr("devsettings_%1.xml").arg(currentstandid));
 
          }
 
@@ -433,7 +446,9 @@ int DeviceManagerIzluchatel::savePositionsOftheDevices (QString ifilename)
 {
 
 
-    QDomDocument doc (tr ("DevicesSettings_%1").arg(currentstandid));
+//    QDomDocument doc (tr ("DevicesSettings_%1").arg(currentstandid));
+
+    QDomDocument doc;
 
 
     //doc.appendChild(QDomText ());

@@ -96,7 +96,7 @@ void DeviceManagerIzluchatelUI::displayDevices()
 
        QPushButton * conButton = new QPushButton ("Проверить связь");
 
-//        connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(onPingFired()) );
+       connect (conButton, SIGNAL (clicked()),devman->devicesHash.value(k), SLOT(slotConnectx()) );
        ui->tableWidget->setIndexWidget(ui->tableWidget->model()->index(r,4), conButton);
        r++;
 
@@ -133,5 +133,5 @@ void DeviceManagerIzluchatelUI::displayActiveDevices()
 
 void DeviceManagerIzluchatelUI::on_searchDevice_2_clicked()
 {
-devman->savePositionsOftheDevices ("ololo.xml");
+
 }

@@ -33,7 +33,7 @@ class DeviceManagerIzluchatel : public QObject
     Q_OBJECT
 public:
     //EC1
-    explicit DeviceManagerIzluchatel(PrincipalWindow * iprincipal,  QObject *parent = 0);
+    explicit DeviceManagerIzluchatel(PrincipalWindow * iprincipal, int currentStandId=0, QObject *parent = 0);
     ~DeviceManagerIzluchatel ();
 
     /**
@@ -116,9 +116,8 @@ public:
 
 
 
-  void   setStandID(QString id);
-
-    QString getStandID();
+    void   setStandID(int id);
+    int getStandID();
 
 
     QHash <int, Device * > devicesHash;
@@ -129,7 +128,7 @@ public:
      * @brief currentstandid идентификатор текущего стенда, который будет сличаться
      *с данными в файле предпочтений пользователя по устройствам.
      */
-    QString currentstandid;
+    int currentstandid;
 
     PrincipalWindow * principal;
     DeviceManagerIzluchatelUI * UI;

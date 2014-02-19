@@ -16,14 +16,16 @@ DeviceRS232::~DeviceRS232()
 
 int DeviceRS232::configureViaXml (QDomElement iel)
 {
-QDomNodeList nodeList = docElem.elementsByTagName("portname");
+QDomNodeList nodeList = iel.elementsByTagName("portname");
 if (nodeList.isEmpty())
 {
     ms("Error: no portname section in XML", MSG_ERROR);
     return 1;
 }
 
-QString portnamex = nodeList.at(0).toElement().childNodes().at(0).toText();
+QString portnamex = nodeList.at(0).toElement().childNodes().at(0).toText().data();
+
+ms (portnamex,MSG_DEBUG);
 
 if (portnamex.isEmpty())
 {
@@ -92,16 +94,7 @@ return 0;
 
 void DeviceRS232::supersearch (QList<QextPortInfo> inlist)
 {
-
-
-
     ms("Search_Started",MSG_DEBUG);
-
-
-
-
-
-
 //суперметод, запускаем процесс поиска
 idInSearchList=-1;
 portIsSearched=1;
@@ -187,28 +180,28 @@ void DeviceRS232::setConnectedState (bool isState)
 
 
     }
-
-
     //теперь если порт не ищем
 
-    if (isState==isConnected)  //если состояние и так такое, как пришло
-    return; //нет нужды сообщать о его изменении
+    //ms(tr ("nexxt"),MSG_DEBUG); //рассказываем, что таки нет устройства
+
+
 
 
     isConnected=isState;  //иначе присвариваем
 
     if (isConnected) //если наконец подключились
     {
-      emit fireConnected(id); //рассказать, что подключились
-      portIsSearched=0; //и отключить поиск порта,если он был включен
+        //if (isState!=isConnected)  //если состояние не такое, как пришло
+       //{
+            emit fireConnected(id); //рассказать, что подключились
+            portIsSearched=0; //и отключить поиск порта,если он был включен
+        //}
     }
 
    else //иначе, если мы отключены
     {
             emit fireDisconnected(id);//об этом надо рассказать
     }
-
-
 
 
 

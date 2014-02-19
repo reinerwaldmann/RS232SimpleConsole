@@ -90,6 +90,7 @@ bool portIsSearched;  //when up, then slot 'disconnected' not to be activated
 
 public slots:
 void onPingFailed ();
+void slotConnectx ();
 
 
 

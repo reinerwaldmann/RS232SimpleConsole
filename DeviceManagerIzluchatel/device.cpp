@@ -108,8 +108,7 @@ if (isConnected)
 
 else
 {
-    if (!portIsSearched) emit fireDisconnected(id);
-
+if (!portIsSearched)  emit fireDisconnected(id);
 }
 
 }
@@ -133,6 +132,11 @@ QDomElement Device::getXMLPOsition ( QDomDocument * idoc)
 
 
 
+}
 
+
+void Device::slotConnectx ()
+{
+    connectx();
 
 }
