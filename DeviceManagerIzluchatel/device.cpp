@@ -10,7 +10,6 @@ Device::Device()
     reqtimer->setSingleShot(1);
     type=0; //не определен
     timeout  =5000;
-
     portIsSearched=0;
 }
 

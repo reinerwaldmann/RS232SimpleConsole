@@ -18,7 +18,7 @@ DeviceRS232Rubin201::DeviceRS232Rubin201()
 
     waitingForConnect=0;
 
-    uniqueType=1;
+    uniqueType=101;
 
 }
 

@@ -28,7 +28,7 @@ virtual int disconnecx()=0;
 virtual int ping()=0;
 virtual int measure(QString type="")=0;
 virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
-virtual QDomElement  getXMLPOsition (QDomDocument * idoc); //tels the position and other connection parameters in XML format
+virtual QDomElement  getXMLPOsition (QDomDocument * idoc); //tells the position and other connection parameters in XML format
 
 
 virtual int configureViaXml (QDomElement iel)=0; //in future this code must form another constructor
@@ -65,13 +65,13 @@ Device * returnMe();
 
 
 protected:
-bool isConnected;
+
 int id;
 QString name;
 QString variableComment;
 QString descr;
 QTimer * reqtimer; //таймер, который используется для таймаутов
-int type; //1 - RS232
+int type; //1 - RS232 2- LAN
 
 int uniqueType; //уникальный идентификатор типа устройства
 
@@ -80,6 +80,8 @@ virtual void setConnectedState (bool isState);
 
 
 bool portIsSearched;  //when up, then slot 'disconnected' not to be activated
+
+bool isConnected;
 
 
 
