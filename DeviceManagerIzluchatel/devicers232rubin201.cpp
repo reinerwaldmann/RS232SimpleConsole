@@ -230,6 +230,7 @@ QDomElement DeviceRS232Rubin201::getXMLPOsition(QDomDocument * idoc)
 
 
 
+
     return node;
 
 

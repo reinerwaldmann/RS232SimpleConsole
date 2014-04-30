@@ -86,10 +86,11 @@ public:
 
 
     /**
-     * @brief addDevice
-     * we add the device to the list, assign it an id that it'll have in the hash
-     * @param idevice devices
-     * @return 0 all is OK 1 same id already present
+     * @brief DeviceManagerIzluchatel::addDevice
+     * @param idevice
+     * @param where 0 - to the active devices 1 - to the devices
+     * @param desiredid
+     * @return
      */
     //EC11
     int addDevice (Device *idevice, bool where,  int desiredid=0);
