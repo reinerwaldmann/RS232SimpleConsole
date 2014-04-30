@@ -4,7 +4,7 @@
 #include <QTimer>
 #include <qDebug>
 
-class DeviceRS232Rubin201 : public DeviceRS232
+class DeviceRS232Rubin201 : public DeviceRS232, Measurer
 {
 
     Q_OBJECT

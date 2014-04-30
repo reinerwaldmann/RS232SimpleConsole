@@ -39,6 +39,9 @@ void DeviceLANJerome::readyRead ()
     }
 
 
+
+
+
 }
 
 void DeviceLANJerome::wrLine(int numline, bool state)

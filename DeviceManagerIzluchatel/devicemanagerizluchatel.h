@@ -95,14 +95,21 @@ public:
     //EC11
     int addDevice (Device *idevice, bool where,  int desiredid=0);
 
-
-    /*inits the deviceshashs*/
-    int initList (QString ifilename);
-     /**
-     * @brief devicesHash hashlist of the devices
-     * char is the id of the device, unique in this manager
+    /**
+     * @brief initList
+     * Инициирует список устройств, местоположение (какой к какому порту подключен) которых уже известно
+     * @param ifilename
+     * @return @return 0 при успехе, >0 при ошибке
      */
 
+    int initList (QString ifilename);
+
+    /**
+     * @brief initActiveDeviceList
+     *  Инициирует список устройств, местоположение (какой к какому порту подключен) которых ещё неизвестно
+     * @param ifilename
+     * @return 0 при успехе, >0 при ошибке
+     */
     int initActiveDeviceList (QString ifilename);
 
     /**
@@ -114,13 +121,27 @@ public:
      */
 
     int savePositionsOftheDevices (QString ifilename);
-
-
-
     void   setStandID(int id);
     int getStandID();
 
 
+    /**
+     * @brief wrLine
+     * Установить состояние на линии контроллера. В данной версии для одного контроллера
+     * @param numline
+     * номер линии
+     * @param state
+     * состояние (1 - высокий, 0 -  низкий)
+     * @return
+     */
+    int wrLine(int numline, bool state=1);
+
+    int searchRS232DevicesOnPorts  (int idInActiveDevList);
+
+    /**
+    * @brief devicesHash hashlist of the devices
+    * char is the id of the device, unique in this manager
+    */
     QHash <int, Device * > devicesHash;
     QHash <int, Device * > activeDevicesHash; //ненайденное оборудование
 
@@ -136,7 +157,16 @@ public:
 
 
 
-    int searchRS232DevicesOnPorts  (int idInActiveDevList);
+protected:
+    Controller * controller;  //покамест один, потом будет больше
+    /* Подразумевая, что контроллер у нас один, можем сделать так:
+при запросе к контроллеру прогоняем  список подключенных устройств.
+Первый же найденный контроллер среди них мы объявляем текущим контроллером
+Пока к реализации не применять.
+*/
+
+
+
 
 
 signals:

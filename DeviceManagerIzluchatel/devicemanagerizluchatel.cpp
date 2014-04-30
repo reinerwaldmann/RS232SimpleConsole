@@ -5,7 +5,7 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow * iprincipal, i
 {
     //principal = dynamic_cast  <PrincipalWindow*> (parent);
     principal = iprincipal;
-
+    controller = NULL;
     UI = new DeviceManagerIzluchatelUI (this);
     UI->show();
 
@@ -73,14 +73,21 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
  *In this program (Izluchatel) considering Rubin 201 device the parameter to
  *measure function is always 0.
  *
- *While debugging, the only attached device is slt 0 out 1 which is 1 hash (2*0+1=1)
+ *
  **/
 
      if (!devicesHash.contains(id)) {
          slotAcceptMessage(0, "measure Попытка запросить измерений у отсутствующего в списке устройств устройства", MSG_ERROR);
          return 1;
      }
-     return (devicesHash.value(id)->measure(type));
+
+     Measurer*  m =  dynamic_cast<Measurer*>(devicesHash.value(id));
+    if (m==NULL)
+    {
+        slotAcceptMessage(0, "measure Попытка произвести измерения устройством, для этого не предназначенным", MSG_ERROR);
+        return 2;
+    }
+    return  m->measure(type);
 
  }
 
@@ -221,7 +228,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
                     QDomNode node = nodeList.at(i);
                     //начинаем магию конфигурирования списка устройств
-                    //ВНИМАНИЕ! не активных, а просто устройств
+                    //ВНИМАНИЕ! не активных, а просто устройств, уже найденных
                     //подразумевается, что в файле устройства, которые на своих местах
 
 
@@ -494,4 +501,12 @@ int DeviceManagerIzluchatel::savePositionsOftheDevices (QString ifilename)
 
     return 0;
 
+}
+
+
+int DeviceManagerIzluchatel::wrLine(int numline, bool state=1)
+{
+//упрощённая версия, полагающая, что контроллер задан в переменной Controller
+//здесь можно понаписать код, который будет искать контроллер в списке и инициализировать оную переменную
+controller->wrLine(numline, state);
 }

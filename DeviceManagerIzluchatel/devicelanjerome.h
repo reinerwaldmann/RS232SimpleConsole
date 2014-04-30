@@ -2,7 +2,8 @@
 #define DEVICELANJEROME_H
 #include "devicelan.h"
 
-class DeviceLANJerome : public DeviceLAN
+
+class DeviceLANJerome : public DeviceLAN, Controller
 {
 public:
     DeviceLANJerome();

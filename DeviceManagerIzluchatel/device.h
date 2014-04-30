@@ -7,6 +7,9 @@
 
 #include <QDomElement>
 
+#include "controller.h"
+#include "measurer.h"
+
 
 #define MSG_ERROR 1
 #define MSG_NEUTRAL 0
@@ -26,7 +29,7 @@ virtual ~Device();
 virtual int connectx()=0;
 virtual int disconnecx()=0;
 virtual int ping()=0;
-virtual int measure(QString type="")=0;
+
 virtual QString getPosition ()=0; //for RS232 it returns port. For LAN - IP
 virtual QDomElement  getXMLPOsition (QDomDocument * idoc); //tells the position and other connection parameters in XML format
 
