@@ -518,7 +518,17 @@ int DeviceManagerIzluchatel::savePositionsOftheDevices (QString ifilename)
 */
        //xmlWriter.write
       QTextStream  stream (&file);
-      stream << doc.toString(10);
+
+
+      stream.setCodec( QTextCodec::codecForName("UTF-8") );
+
+
+        stream<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+
+
+
+
+        stream << doc.toString(10);
 
     stream.flush();
     file.close();

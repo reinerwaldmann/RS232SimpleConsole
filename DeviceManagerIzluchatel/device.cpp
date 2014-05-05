@@ -124,7 +124,7 @@ QDomElement Device::getXMLPOsition ( QDomDocument * idoc)
     QDomElement node=idoc->createElement("device");
     ///node.setTagName("device");
 
-    node.setAttribute("name", name );
+    node.setAttribute("name", name);
     node.setAttribute("descr", descr);
     node.setAttribute("varComment", variableComment);
     node.setAttribute("id", id );

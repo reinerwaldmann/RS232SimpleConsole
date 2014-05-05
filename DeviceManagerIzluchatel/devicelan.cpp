@@ -35,7 +35,7 @@ QDomElement  DeviceLAN::getXMLPOsition (QDomDocument * idoc) //tells the positio
     node.appendChild(val);
 
     QDomElement val1 = idoc->createElement("port");
-    QDomText txt1 = idoc->createTextNode(QString(port)) ;
+    QDomText txt1 = idoc->createTextNode(QString::number(port)) ;
     val.appendChild(txt1);
     node.appendChild(val1);
 

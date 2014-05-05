@@ -7,6 +7,8 @@
 #include <QDomText>
 #include <QDomElement>
 
+#include <QTextCodec>
+
 #include "devicemanagerizluchatelui.h"
 #include "devicelanjerome.h"
 #include "devicers232rubin201.h"
