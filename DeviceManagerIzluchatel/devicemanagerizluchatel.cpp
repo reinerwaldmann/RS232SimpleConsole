@@ -187,7 +187,27 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         //реализуем добавление из xml файла
 
-        if (ifilename.isEmpty()) return 1;
+
+        //добавление контроллера
+        /*
+            В настоящей версии контроллер добавляется по умолчанию (с параметрами по умолчанию),
+            попытка подключиться к нему следует сразу.
+            В дальнейшем, эту секцию можно будет развить - сделать так, чтобы процесс добавления контроллера можно было
+            настраивать файлом требований к устройствам. Пока контроллер в файл включать не требуется, ибо включается по умолчанию.
+            В редакции функции initActiveDeviceList(...) надлежит при обнаружении Jerome ноду с оным пропускать безо внимания,
+            во избежание двойного включения.
+
+        */
+
+        int controllerid=1;
+        DeviceLANJerome * djrm = new DeviceLANJerome ();
+        addDevice(djrm,1, controllerid);
+        connectALL(); //Этот вызов - для тех, кто добавлен принудительно, как контроллер.
+
+        if (ifilename.isEmpty())
+        {
+            return 1;
+        }
 
 
         QFile  infile (ifilename);
@@ -195,12 +215,9 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
         if (!infile.open(QIODevice::ReadOnly | QIODevice::Text) )
 
         {
-            slotAcceptMessage(0, "initlist Unable to open file with devices settings", MSG_DEBUG);
+            slotAcceptMessage(0, "initlist Unable to open file with devices settings - probably new configuration applied", MSG_DEBUG);
             return 2;
         }
-
-
-
             QDomDocument doc;
 
             //QDomDocument doc("mydocument");
@@ -265,7 +282,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
                        switch (nodeuniquetype)
                        {
-                        case 1:
+                        case 101:
                            dev = new DeviceRS232Rubin201 ();
                            dev->setID(nodeid);
                            dev->configureViaXml (node.toElement());
@@ -286,7 +303,7 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
                 }
 
 
-                        connectALL();
+                       connectALL();
 
 
 
@@ -300,19 +317,26 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
 int DeviceManagerIzluchatel::initActiveDeviceList(QString ifilename)
     {
-
-
+/*Устройств с id=0 НЕ ДОЛЖНО БЫТЬ, так как идеологически это сам менеджер устройств (сообщения с таким айдишником на слот приёма
+сообщений приходят только от него*/
 
 /*Данная функция отрабатывает, если обнаружен файл с описанием требований к устройствам.
  *Ей должно имя файла передаваться параметром.
  * Есть мнение, что файл может выглядеть так же, как и снимок состояния устройств, только без состояний (с пустыми нодами)
 */
 
+    /*В редакции функции initActiveDeviceList(...) надлежит при обнаружении Jerome ноду с оным пропускать безо внимания,
+    во избежание двойного включения.
+*/
     activeDevicesHash.clear();
-    int readid=1; //типа мы так в файле прочитали
-    DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 (); //конструируем
 
-    addDevice(rdev, 0, readid); //добавляем в список активных
+
+
+    int readid=11; //типа мы так в файле прочитали - идентификатор устройства в пределах стенда 11 - потому что первая десятка служебная (??)
+    DeviceRS232Rubin201 * rdev = new DeviceRS232Rubin201 (); //конструируем
+    addDevice(rdev, 0, readid); //добавляем в список активных - вторая переменная как раз и символизирует об этом
+
+
 
     return 0;
     }
@@ -433,7 +457,7 @@ int DeviceManagerIzluchatel::searchRS232DevicesOnPorts  (int idInActiveDevList)
     //14FEB2014
     switch (activeDevicesHash.value(idInActiveDevList)->getUniqueType())
         {
-        case 1: //RUBIN 201
+        case 101: //RUBIN 201
  dynamic_cast <DeviceRS232Rubin201*> ( activeDevicesHash.value(idInActiveDevList) )->supersearch(selectedports);
         break;
 
@@ -504,7 +528,7 @@ int DeviceManagerIzluchatel::savePositionsOftheDevices (QString ifilename)
 }
 
 
-int DeviceManagerIzluchatel::wrLine(int numline, bool state=1)
+int DeviceManagerIzluchatel::wrLine(int numline, bool state)
 {
 //упрощённая версия, полагающая, что контроллер задан в переменной Controller
 //здесь можно понаписать код, который будет искать контроллер в списке и инициализировать оную переменную

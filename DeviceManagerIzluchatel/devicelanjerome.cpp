@@ -1,8 +1,7 @@
 #include "devicelanjerome.h"
 
-DeviceLANJerome::DeviceLANJerome()
+DeviceLANJerome::DeviceLANJerome():DeviceLAN()
 {
-
 port = 2424;
 ip="192.168.0.101"; //по умолчанию, вообще говоря, может быть и другой адрес
 

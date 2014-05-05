@@ -5,6 +5,8 @@
 
 class DeviceLANJerome : public DeviceLAN, Controller
 {
+    Q_OBJECT
+
 public:
     DeviceLANJerome();
      int ping ();
@@ -16,7 +18,7 @@ public:
 
 
 
-private slots:
+public slots:
     void readyRead ();
 
 

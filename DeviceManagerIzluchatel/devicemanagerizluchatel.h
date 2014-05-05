@@ -7,11 +7,10 @@
 #include <QDomText>
 #include <QDomElement>
 
-
-
-#include "device.h"
-#include "./principalwindow.h"
 #include "devicemanagerizluchatelui.h"
+#include "devicelanjerome.h"
+#include "devicers232rubin201.h"
+
 
 
 #define MSG_ERROR 1
@@ -38,7 +37,7 @@ public:
 
     /**
      * @brief measure
-     * launches measurement process ASYNC, data is returned by ot her function
+     * launches measurement process ASYNC, data is returned by other function
      * @param id is the id of the device in deviceshash
      * @return 0 if OK, 1 if device is known to be offline
      */

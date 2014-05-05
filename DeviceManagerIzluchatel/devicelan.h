@@ -7,6 +7,8 @@
 
 class DeviceLAN : public Device
 {
+    Q_OBJECT
+
 public:
     DeviceLAN();
     virtual ~DeviceLAN ();
@@ -16,7 +18,7 @@ public:
     virtual int sendToPort(QString msg);
     int disconnecx();
 
-    virtual int configureViaXml (QDomElement iel)=0; //in future this code must form another constructor
+    virtual int configureViaXml (QDomElement iel); //in future this code must form another constructor
 
 
 
@@ -30,7 +32,7 @@ protected:
 
 
 
-private slots:
+public slots:
 
 
     virtual void readyRead ()=0;

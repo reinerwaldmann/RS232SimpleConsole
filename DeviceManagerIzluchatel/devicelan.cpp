@@ -1,9 +1,11 @@
 #include "devicelan.h"
 
 DeviceLAN::DeviceLAN()
-
 {
     socket = new QTcpSocket (this);
+    connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+     connect(socket, SIGNAL(connected()), this, SLOT(getConnected()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
 
 }
 
@@ -19,7 +21,7 @@ delete socket;
 QString DeviceLAN::getPosition()
 {
 
-return tr("%1:%2").arg(ip).arg(QString(port));
+return tr("%1:%2").arg(ip).arg(QString::number(port));
 }
 
 
@@ -44,9 +46,8 @@ QDomElement  DeviceLAN::getXMLPOsition (QDomDocument * idoc) //tells the positio
 int DeviceLAN::connectx()
 {
 socket->connectToHost(ip, port);
-connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-connect(socket, SIGNAL(connected()), this, SLOT(getConnected()));
-connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+
+
 return 1;
 /*
 Из-за особенностей реализации QtcpSocket: он при подключении вызывает getConnected, где и есть вызов ping.
