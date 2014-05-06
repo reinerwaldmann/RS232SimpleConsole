@@ -6,14 +6,14 @@ DeviceLAN::DeviceLAN()
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
      connect(socket, SIGNAL(connected()), this, SLOT(getConnected()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
-
+    type=2; //LAN
 }
 
 
 DeviceLAN::~DeviceLAN ()
 {
-disconnecx();
-delete socket;
+if  (isConnected ) disconnecx();
+//delete socket;
 }
 
 
@@ -36,7 +36,7 @@ QDomElement  DeviceLAN::getXMLPOsition (QDomDocument * idoc) //tells the positio
 
     QDomElement val1 = idoc->createElement("port");
     QDomText txt1 = idoc->createTextNode(QString::number(port)) ;
-    val.appendChild(txt1);
+    val1.appendChild(txt1);
     node.appendChild(val1);
 
     return node;
@@ -45,10 +45,16 @@ QDomElement  DeviceLAN::getXMLPOsition (QDomDocument * idoc) //tells the positio
 
 int DeviceLAN::connectx()
 {
-socket->connectToHost(ip, port);
+
+    if (!isConnected)
+    {    socket->connectToHost(ip, port);}
+    else
+    {  ping(); }
+
+    return 1;
 
 
-return 1;
+
 /*
 Из-за особенностей реализации QtcpSocket: он при подключении вызывает getConnected, где и есть вызов ping.
 Соответственно, таймер, ждущий открытия порта, здесь не требуется.

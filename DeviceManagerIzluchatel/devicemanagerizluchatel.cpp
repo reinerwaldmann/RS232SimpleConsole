@@ -1,10 +1,10 @@
 #include "devicemanagerizluchatel.h"
 
-DeviceManagerIzluchatel::DeviceManagerIzluchatel(PrincipalWindow * iprincipal, int icurrentstandid, QObject *parent):
+DeviceManagerIzluchatel::DeviceManagerIzluchatel(/*PrincipalWindow * iprincipal,*/ int icurrentstandid, QObject *parent):
     QObject(parent)
 {
     //principal = dynamic_cast  <PrincipalWindow*> (parent);
-    principal = iprincipal;
+    //principal = iprincipal;
     controller = NULL;
     UI = new DeviceManagerIzluchatelUI (this);
     UI->show();
@@ -202,10 +202,12 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
         int controllerid=1;
         DeviceLANJerome * djrm = new DeviceLANJerome ();
         addDevice(djrm,1, controllerid);
-        connectALL(); //Этот вызов - для тех, кто добавлен принудительно, как контроллер.
+
 
         if (ifilename.isEmpty())
         {
+            connectALL(); //Этот вызов - для тех, кто добавлен принудительно, как контроллер.
+            //если файл будет прочитан, то запустится ещё раз.
             return 1;
         }
 
@@ -216,7 +218,12 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 
         {
             slotAcceptMessage(0, "initlist Unable to open file with devices settings - probably new configuration applied", MSG_DEBUG);
+            connectALL(); //Этот вызов - для тех, кто добавлен принудительно, как контроллер.
+            //если файл будет прочитан, то запустится ещё раз.
+
             return 2;
+
+
         }
             QDomDocument doc;
 
@@ -224,7 +231,10 @@ DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
             if (!doc.setContent(&infile))
             {
               slotAcceptMessage(0, "initlist Error while setting content of the domdocument", MSG_ERROR);
-                return 3 ;
+              connectALL(); //Этот вызов - для тех, кто добавлен принудительно, как контроллер.
+              //если файл будет прочитан, то запустится ещё раз.
+
+              return 3 ;
 
             }
 

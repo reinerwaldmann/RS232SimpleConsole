@@ -52,16 +52,16 @@ debug_timer->start(1000);
 
      //for debugging purposes;;;;
 
-     dvm  = new DeviceManagerIzluchatel (this, 183, this);
-
+  //   dvm  = new DeviceManagerIzluchatel (this, 183, this);
+//
         //dvm->currentstandid = 183;
 
 
 
 
  //Подключение слотов менеджера устройств
-     connect (dvm, SIGNAL (fireTransitMeasData(int, double, QString)), this, SLOT (slotTestDeviceManager(int, double, QString)));
-     connect (dvm, SIGNAL (fireDeviceDisconnected(int)), this, SLOT (slotDeviceManagerDeviceDisconnected(int)));
+    // connect (dvm, SIGNAL (fireTransitMeasData(int, double, QString)), this, SLOT (slotTestDeviceManager(int, double, QString)));
+     //connect (dvm, SIGNAL (fireDeviceDisconnected(int)), this, SLOT (slotDeviceManagerDeviceDisconnected(int)));
 
  // [turn it on!!!] ;-) //
 

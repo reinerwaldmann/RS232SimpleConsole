@@ -21,7 +21,7 @@
 #define MSG_DEBUG 3
 
 
-class PrincipalWindow;
+//class PrincipalWindow;
 class Device;
 class DeviceManagerIzluchatelUI;
 
@@ -34,7 +34,7 @@ class DeviceManagerIzluchatel : public QObject
     Q_OBJECT
 public:
     //EC1
-    explicit DeviceManagerIzluchatel(PrincipalWindow * iprincipal, int currentStandId=0, QObject *parent = 0);
+    explicit DeviceManagerIzluchatel(/*PrincipalWindow * iprincipal, */int currentStandId=0, QObject *parent = 0);
     ~DeviceManagerIzluchatel ();
 
     /**
@@ -153,7 +153,7 @@ public:
      */
     int currentstandid;
 
-    PrincipalWindow * principal;
+    //PrincipalWindow * principal;
     DeviceManagerIzluchatelUI * UI;
 
 

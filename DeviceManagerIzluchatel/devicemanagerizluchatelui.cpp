@@ -124,7 +124,7 @@ void DeviceManagerIzluchatelUI::displayActiveDevices()
     foreach (Device * dev, devman->activeDevicesHash)
     {
         //в списке активных те же идентификаторы, какие будут и в списке устройств
-        ui->comboListOfDevices->addItem( dev->getName(), dev->getID());
+        ui->comboListOfDevices->addItem( dev->getName()+" ID="+QString::number(dev->getID()), dev->getID());
     }
 
 }
