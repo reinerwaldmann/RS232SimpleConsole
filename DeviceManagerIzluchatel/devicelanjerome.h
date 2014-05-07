@@ -1,9 +1,10 @@
 #ifndef DEVICELANJEROME_H
 #define DEVICELANJEROME_H
 #include "devicelan.h"
+#include "controller.h"
 
 
-class DeviceLANJerome : public DeviceLAN, Controller
+class DeviceLANJerome : public DeviceLAN, public Controller
 {
     Q_OBJECT
 

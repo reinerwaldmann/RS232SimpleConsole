@@ -1,0 +1,66 @@
+﻿Опишем  структуры xml файлов, принимаемые device Manager:
+
+Все файлы структур находятся в папке standconfs.
+
+Их может быть 2 типа: 
+
+Файл требований к устройствам
+Содержит в себе список устройств (возможно, кроме контроллера), которые должны быть в стенде с их 
+идентификаторами
+Имя этого файла: 
+devreq_номер стенда.xml
+Пример имени: 
+devreq_1803.xml
+
+Файл конфигурации стенда
+Содержит в себе список устройств (возможно, кроме контроллера), которые должны быть в стенде с их 
+идентификаторами и содержательной частью, описывающей позицию устройства в стенде
+Имя этого файла: 
+devconf_номер стенда.xml
+Пример имени: 
+devconf_1803.xml
+
+
+Пример файла 
+devreq_1803.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<main_part>
+   
+
+<device name="Jerome" varComment="" descr="Ethernet Controller Kernelchip Jerome" id="1" unique_type="201">
+  
+</device>
+          
+
+<device name="Рубин 201" varComment="" descr="Измеритель оптической мощности" id="11" unique_type="101">
+                     
+</device>
+
+
+</main_part>
+
+
+
+
+
+Пример файла 
+devconf_1803.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<main_part>
+   
+<device name="Jerome" descr="Ethernet Controller Kernelchip Jerome" varComment="" unique_type="201" id="1">
+ 
+	<ip>192.168.0.101</ip>
+                    
+	<port>2424</port>
+ 
+</device>
+
+<device name="Рубин 201" descr="Измеритель оптической мощности" varComment="" unique_type="101" id="11">
+                    
+	<portname>COM1</portname>
+          
+</device>
+</main_part>

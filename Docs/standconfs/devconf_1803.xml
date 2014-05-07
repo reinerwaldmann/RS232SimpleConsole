@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><main_part>
+          <device name="Рубин 201" descr="Измеритель оптической мощности" varComment="" id="11" unique_type="101" type="1">
+                    <portname>COM1</portname>
+          </device>
+          <device name="Jerome" descr="Ethernet Controller Kernelchip Jerome" varComment="" id="1" unique_type="201" type="2">
+                    <ip>192.168.0.101</ip>
+                    <port>2424</port>
+          </device>
+</main_part>

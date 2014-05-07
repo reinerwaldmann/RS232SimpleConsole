@@ -8,6 +8,7 @@ DeviceManagerIzluchatelUI::DeviceManagerIzluchatelUI(DeviceManagerIzluchatel *id
     ui->setupUi(this);
     devman = idevman;
     ui->comboLevelOfOutput->setCurrentIndex(2);
+    ui->searchDevice_2->hide();
 
 }
 
@@ -53,6 +54,10 @@ void DeviceManagerIzluchatelUI::acceptPing(int id)
 
 void DeviceManagerIzluchatelUI::displayDevices()
 {
+    if (devman->activeDevicesHash.empty())
+     {ui->searchDevice->setEnabled(0); }
+    else
+     {ui->searchDevice->setEnabled(1); }
 
 
 
@@ -111,16 +116,12 @@ void DeviceManagerIzluchatelUI::displayDevices()
 void DeviceManagerIzluchatelUI::on_searchDevice_clicked()
 {
 devman->searchRS232DevicesOnPorts( ui->comboListOfDevices->itemData(ui->comboListOfDevices->currentIndex()).toInt()  );
-
-
 }
 
 void DeviceManagerIzluchatelUI::displayActiveDevices()
 {
     ui->comboListOfDevices->clear();
-
-     ui->searchDevice->setEnabled(!devman->activeDevicesHash.isEmpty());
-
+    ui->searchDevice->setEnabled(!devman->activeDevicesHash.isEmpty());
     foreach (Device * dev, devman->activeDevicesHash)
     {
         //в списке активных те же идентификаторы, какие будут и в списке устройств

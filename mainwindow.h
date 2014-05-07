@@ -19,11 +19,15 @@ public:
 
     DeviceManagerIzluchatel * dvman;
 
+
 private slots:
     void on_ControllerSet_clicked();
 
+
 private:
     Ui::MainWindow *ui;
+
+    void closeEvent(QCloseEvent *ce);
 };
 
 #endif // MAINWINDOW_H

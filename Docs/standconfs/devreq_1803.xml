@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><main_part>
+          <device name="Jerome" varComment="" descr="Ethernet Controller Kernelchip Jerome" id="1" unique_type="201">
+                   </device>
+          <device name="Рубин 201" varComment="" descr="Измеритель оптической мощности" id="11" unique_type="101">
+                         </device>
+</main_part>
