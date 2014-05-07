@@ -19,7 +19,6 @@ DeviceManagerIzluchatel::DeviceManagerIzluchatel(int icurrentstandid, QObject *p
     }
 }
 
-
 DeviceManagerIzluchatel::~DeviceManagerIzluchatel ()
 {
         QList <int> keylist = devicesHash.keys();
